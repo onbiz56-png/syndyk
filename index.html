@@ -4,61 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#F5F5F7">
 <title>Финансы</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ═══ ПЕРЕМЕННЫЕ ═══ */
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
   :root {
-    --bg: #F2F2F7;
-    --bg-grouped: #F2F2F7;
-    --surface: #FFFFFF;
-    --surface-2: #FAFAFA;
-    --label-1: #000000;
-    --label-2: #3C3C43;
-    --label-3: #8E8E93;
-    --separator: rgba(60,60,67,0.12);
-    --tint: #A78BFA;
-    --tint-2: #C4B5FD;
-    --tint-grad: linear-gradient(135deg, #A78BFA 0%, #818CF8 100%);
+    --bg: #F5F5F7;
+    --card: #FFFFFF;
+    --text: #1C1C1E;
+    --muted: #8E8E93;
+    --accent: #6C5CE7;
+    --accent2: #A29BFE;
     --green: #34C759;
     --red: #FF3B30;
     --orange: #FF9500;
     --blue: #007AFF;
-    --pink: #FF2D55;
-    --yellow: #FFCC00;
-    --teal: #5AC8FA;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #000000;
-      --bg-grouped: #000000;
-      --surface: #1C1C1E;
-      --surface-2: #2C2C2E;
-      --label-1: #FFFFFF;
-      --label-2: #EBEBF5;
-      --label-3: #8E8E93;
-      --separator: rgba(84,84,88,0.65);
-    }
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg);
-    color: var(--label-1);
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
+    color: var(--text);
+    padding: 20px 16px 100px;
+    min-height: 100vh;
     overflow-x: hidden;
   }
-  body {
-    max-width: 430px;
-    margin: 0 auto;
-    padding-bottom: 100px;
-    min-height: 100vh;
-  }
 
-  /* ═══ ЭКРАНЫ ═══ */
-  .screen { display: none; animation: fadeIn 0.3s ease; }
-  .screen.active { display: block; }
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -66,174 +41,158 @@
 
   /* ═══ ХЕДЕР ═══ */
   .header {
-    padding: calc(env(safe-area-inset-top) + 16px) 20px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 22px;
   }
-  .greeting { font-size: 13px; color: var(--label-3); font-weight: 500; }
-  .username { font-size: 22px; font-weight: 700; margin-top: 2px; }
+  .greeting-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .greeting-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
   .avatar {
-    width: 40px; height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: var(--tint-grad);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-weight: 700;
     font-size: 16px;
-    box-shadow: 0 4px 12px rgba(167,139,250,0.3);
   }
 
-  /* ═══ ЗАГОЛОВКИ СЕКЦИЙ ═══ */
-  .section-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--label-3);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 20px 20px 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .section-link {
-    font-size: 14px;
-    color: var(--tint);
-    font-weight: 500;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-
-  /* ═══ БАЛАНС ═══ */
+  /* ═══ КАРТОЧКА БАЛАНСА ═══ */
   .balance-card {
-    margin: 8px 20px 0;
-    padding: 24px;
-    background: var(--tint-grad);
+    background: linear-gradient(135deg, #6C5CE7, #A29BFE);
     border-radius: 24px;
+    padding: 22px;
     color: white;
-    box-shadow: 0 12px 32px rgba(167,139,250,0.35);
+    margin-bottom: 18px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
   }
   .balance-card::before {
     content: '';
     position: absolute;
-    top: -50%; right: -20%;
-    width: 200px; height: 200px;
+    top: -50%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
     background: rgba(255,255,255,0.1);
     border-radius: 50%;
   }
-  .balance-label {
+  .balance-lbl {
     font-size: 13px;
-    opacity: 0.85;
+    opacity: 0.8;
     font-weight: 500;
   }
   .balance-amount {
     font-size: 36px;
-    font-weight: 700;
-    margin: 6px 0 12px;
+    font-weight: 800;
+    margin-top: 6px;
     letter-spacing: -1px;
   }
-  .balance-meta {
-    display: flex;
-    gap: 16px;
+  .balance-currency { font-size: 24px; opacity: 0.7; margin-left: 4px; }
+  .balance-change {
+    margin-top: 10px;
     font-size: 13px;
-    opacity: 0.9;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,0.18);
+    padding: 4px 10px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
   }
-  .balance-meta span::before {
-    content: '↑';
-    margin-right: 4px;
-  }
-  .balance-meta span.down::before { content: '↓'; }
 
-  /* ═══ КАРТОЧКИ 2x2 ═══ */
-  .cards-grid {
+  /* ═══ МИНИ-КАРТОЧКИ ═══ */
+  .mini-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 12px 20px 0;
+    gap: 10px;
+    margin-bottom: 18px;
   }
-  .card {
-    background: var(--surface);
+  .mini-card {
+    background: var(--card);
     border-radius: 18px;
-    padding: 16px;
-    cursor: pointer;
-    transition: transform 0.15s;
+    padding: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
   }
-  .card:active { transform: scale(0.97); }
-  .card-icon {
-    width: 36px; height: 36px;
+  .mini-icon {
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-size: 18px;
   }
-  .card-icon.green { background: rgba(52,199,89,0.15); color: var(--green); }
-  .card-icon.red { background: rgba(255,59,48,0.15); color: var(--red); }
-  .card-icon.blue { background: rgba(0,122,255,0.15); color: var(--blue); }
-  .card-icon.orange { background: rgba(255,149,0,0.15); color: var(--orange); }
-  .card-label {
-    font-size: 12px;
-    color: var(--label-3);
-    font-weight: 500;
-  }
-  .card-value {
-    font-size: 18px;
-    font-weight: 700;
-    margin-top: 4px;
-  }
+  .mini-icon.green { background: rgba(52, 199, 89, 0.15); }
+  .mini-icon.red { background: rgba(255, 59, 48, 0.15); }
+  .mini-icon.blue { background: rgba(0, 122, 255, 0.15); }
+  .mini-icon.orange { background: rgba(255, 149, 0, 0.15); }
 
-  /* ═══ AI-СОВЕТ ═══ */
+  .mini-lbl { font-size: 12px; color: var(--muted); font-weight: 500; }
+  .mini-val { font-size: 17px; font-weight: 700; margin-top: 2px; }
+
+  /* ═══ AI СОВЕТ ═══ */
   .ai-card {
-    margin: 12px 20px 0;
+    background: linear-gradient(135deg, #FF9500, #FF6B6B);
+    border-radius: 20px;
     padding: 16px;
-    background: var(--surface);
-    border-radius: 18px;
+    color: white;
+    margin-bottom: 18px;
     display: flex;
     gap: 12px;
     align-items: flex-start;
-    border-left: 3px solid var(--tint);
+    box-shadow: 0 6px 20px rgba(255, 149, 0, 0.25);
   }
   .ai-emoji {
     font-size: 28px;
     flex-shrink: 0;
   }
-  .ai-text { flex: 1; }
-  .ai-title {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .ai-desc {
-    font-size: 13px;
-    color: var(--label-2);
-    line-height: 1.4;
-  }
+  .ai-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .ai-text { font-size: 13px; opacity: 0.95; line-height: 1.4; }
 
-  /* ═══ СПИСКИ ═══ */
-  .list {
-    margin: 8px 20px 0;
-    background: var(--surface);
-    border-radius: 18px;
-    overflow: hidden;
+  /* ═══ СЕКЦИИ ═══ */
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 22px 4px 12px;
   }
-  .exp {
+  .section-title { font-size: 17px; font-weight: 700; }
+  .section-link { font-size: 13px; color: var(--accent); font-weight: 600; }
+
+  /* ═══ ОПЕРАЦИИ ═══ */
+  .ops-list {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .op-item {
     display: flex;
     align-items: center;
-    padding: 14px 16px;
     gap: 12px;
-    cursor: pointer;
-    border-bottom: 0.5px solid var(--separator);
-    transition: background 0.15s;
+    padding: 12px 10px;
+    border-radius: 12px;
+    transition: background 0.2s;
   }
-  .exp:last-child { border-bottom: none; }
-  .exp:active { background: var(--surface-2); }
-  .exp-ico {
-    width: 40px; height: 40px;
+  .op-item:active { background: #F2F2F7; }
+  .op-icon {
+    width: 40px;
+    height: 40px;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -241,627 +200,677 @@
     font-size: 20px;
     flex-shrink: 0;
   }
-  .exp-info { flex: 1; min-width: 0; }
-  .exp-name {
-    font-size: 15px;
+  .op-info { flex: 1; min-width: 0; }
+  .op-title {
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .exp-meta {
-    font-size: 12px;
-    color: var(--label-3);
+  .op-cat { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .op-amount { font-size: 15px; font-weight: 700; }
+  .op-amount.expense { color: var(--red); }
+  .op-amount.income { color: var(--green); }
+  .empty-list {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 14px;
   }
-  .exp-amt {
-    font-size: 15px;
-    font-weight: 700;
-  }
-  .exp-amt.income { color: var(--green); }
 
   /* ═══ ПОДПИСКИ ═══ */
-  .subs-summary {
-    margin: 12px 20px 0;
-    padding: 20px;
-    background: var(--surface);
-    border-radius: 18px;
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-  }
-  .subs-stat-val {
-    font-size: 22px;
-    font-weight: 700;
-    background: var(--tint-grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .subs-stat-lbl {
-    font-size: 11px;
-    color: var(--label-3);
-    margin-top: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  .subs-filters {
+  .sub-filters {
     display: flex;
     gap: 8px;
-    padding: 16px 20px 4px;
+    margin-bottom: 14px;
     overflow-x: auto;
+    padding-bottom: 4px;
   }
-  .subs-filters::-webkit-scrollbar { display: none; }
   .sub-filter {
     padding: 8px 16px;
-    background: var(--surface);
+    background: var(--card);
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--label-2);
+    color: var(--muted);
     white-space: nowrap;
     cursor: pointer;
-    transition: all 0.2s;
   }
   .sub-filter.active {
-    background: var(--tint);
+    background: var(--accent);
     color: white;
   }
-  .sub-item {
+  .sub-card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
-    padding: 14px 16px;
     gap: 12px;
-    border-bottom: 0.5px solid var(--separator);
-    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
   }
-  .sub-item:last-child { border-bottom: none; }
   .sub-logo {
-    width: 44px; height: 44px;
-    border-radius: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 22px;
     color: white;
     font-weight: 700;
-    font-size: 16px;
     flex-shrink: 0;
   }
   .sub-info { flex: 1; }
   .sub-name { font-size: 15px; font-weight: 600; }
-  .sub-next { font-size: 12px; color: var(--label-3); margin-top: 2px; }
-  .sub-price { font-size: 15px; font-weight: 700; text-align: right; }
-  .sub-period { font-size: 11px; color: var(--label-3); }
+  .sub-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .sub-price { text-align: right; }
+  .sub-amount { font-size: 15px; font-weight: 700; }
+  .sub-period { font-size: 11px; color: var(--muted); }
 
   /* ═══ ЦЕЛИ ═══ */
   .goal-card {
-    margin: 12px 20px 0;
-    padding: 18px;
-    background: var(--surface);
-    border-radius: 18px;
-    cursor: pointer;
+    background: var(--card);
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
   }
   .goal-head {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
-  .goal-emoji {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: var(--surface-2);
+  .goal-title {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 22px;
+    gap: 10px;
   }
-  .goal-info { flex: 1; }
-  .goal-name { font-size: 16px; font-weight: 700; }
-  .goal-deadline { font-size: 12px; color: var(--label-3); margin-top: 2px; }
+  .goal-emoji { font-size: 28px; }
+  .goal-name { font-size: 15px; font-weight: 700; }
+  .goal-deadline { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .goal-percent {
     font-size: 18px;
-    font-weight: 700;
-    color: var(--tint);
+    font-weight: 800;
+    color: var(--accent);
   }
-  .goal-bar {
+  .goal-progress {
     height: 8px;
-    background: var(--surface-2);
+    background: #F2F2F7;
     border-radius: 4px;
     overflow: hidden;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
-  .goal-fill {
+  .goal-bar {
     height: 100%;
-    background: var(--tint-grad);
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
     border-radius: 4px;
-    transition: width 0.6s ease;
   }
   .goal-amounts {
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-    color: var(--label-2);
   }
-  .goal-amounts b { font-weight: 700; color: var(--label-1); }
-
+  .goal-current { font-weight: 700; }
+  .goal-total { color: var(--muted); }
   .add-goal {
-    margin: 16px 20px 0;
-    padding: 16px;
-    background: var(--surface);
+    width: 100%;
+    padding: 14px;
+    background: var(--card);
+    border: 2px dashed #C7C7CC;
     border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: var(--tint);
+    color: var(--accent);
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    border: 2px dashed rgba(167,139,250,0.3);
+    font-family: inherit;
+    margin-top: 4px;
   }
 
   /* ═══ СТАТИСТИКА ═══ */
   .period-tabs {
     display: flex;
-    margin: 12px 20px 0;
-    background: var(--surface-2);
-    border-radius: 10px;
-    padding: 3px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 16px;
   }
   .period-tab {
     flex: 1;
-    text-align: center;
     padding: 8px;
+    text-align: center;
     font-size: 13px;
     font-weight: 600;
-    color: var(--label-2);
-    border-radius: 7px;
+    color: var(--muted);
+    border-radius: 9px;
     cursor: pointer;
-    transition: all 0.2s;
   }
   .period-tab.active {
-    background: var(--surface);
-    color: var(--label-1);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    background: var(--accent);
+    color: white;
   }
-
-  .donut-card {
-    margin: 12px 20px 0;
-    padding: 20px;
-    background: var(--surface);
-    border-radius: 18px;
-    text-align: center;
+  .chart-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
   }
-  .donut-wrap {
-    position: relative;
+  .chart-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+  .donut {
     width: 180px;
     height: 180px;
-    margin: 0 auto;
+    margin: 0 auto 16px;
+    position: relative;
   }
+  .donut svg { transform: rotate(-90deg); }
   .donut-center {
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  .donut-total {
-    font-size: 24px;
-    font-weight: 700;
-  }
-  .donut-label {
-    font-size: 11px;
-    color: var(--label-3);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  .donut-legend {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-  }
-  .legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-  }
-  .legend-name { flex: 1; text-align: left; }
-  .legend-val { font-weight: 600; }
-
-  .chart-card {
-    margin: 12px 20px 0;
-    padding: 20px;
-    background: var(--surface);
-    border-radius: 18px;
-  }
-  .chart-bars {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 120px;
-    gap: 6px;
-    margin-top: 16px;
-  }
-  .bar-wrap {
-    flex: 1;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
   }
-  .bar {
-    width: 100%;
-    background: var(--tint-grad);
-    border-radius: 6px 6px 0 0;
-    min-height: 4px;
-    transition: height 0.6s ease;
-  }
-  .bar-label {
-    font-size: 10px;
-    color: var(--label-3);
-    font-weight: 600;
-  }
-
+  .donut-val { font-size: 22px; font-weight: 800; }
+  .donut-lbl { font-size: 11px; color: var(--muted); }
+  .cat-list { margin-top: 8px; }
   .cat-row {
     display: flex;
     align-items: center;
-    padding: 12px 16px;
-    gap: 12px;
-    border-bottom: 0.5px solid var(--separator);
+    gap: 10px;
+    padding: 8px 0;
   }
-  .cat-row:last-child { border-bottom: none; }
-  .cat-ico {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+  .cat-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
-  .cat-info { flex: 1; }
-  .cat-name { font-size: 14px; font-weight: 600; }
-  .cat-bar-wrap {
-    height: 4px;
-    background: var(--surface-2);
-    border-radius: 2px;
-    margin-top: 6px;
-    overflow: hidden;
-  }
-  .cat-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-  }
-  .cat-sum {
-    font-size: 14px;
-    font-weight: 700;
-  }
+  .cat-row-name { flex: 1; font-size: 13px; font-weight: 500; }
+  .cat-row-val { font-size: 13px; font-weight: 700; }
 
   /* ═══ ТАБ-БАР ═══ */
   .tabbar {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 430px;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-top: 0.5px solid var(--separator);
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 0.5px solid rgba(0,0,0,0.08);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
-    z-index: 100;
-  }
-  @media (prefers-color-scheme: dark) {
-    .tabbar { background: rgba(28,28,30,0.85); }
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    z-index: 50;
   }
   .tab {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 6px 0;
+    gap: 3px;
+    padding: 6px 4px;
+    color: var(--muted);
     cursor: pointer;
-    color: var(--label-3);
     transition: color 0.2s;
-    -webkit-tap-highlight-color: transparent;
   }
-  .tab svg {
-    width: 24px; height: 24px;
-    stroke-width: 2;
-    transition: transform 0.2s;
-  }
-  .tab-lbl {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1px;
-  }
-  .tab.active { color: var(--tint); }
-  .tab.active svg { transform: scale(1.1); }
-  .tab:active svg { transform: scale(0.9); }
-  .tab-fab { position: relative; margin-top: -28px; }
+  .tab svg { width: 22px; height: 22px; }
+  .tab-lbl { font-size: 10px; font-weight: 600; }
+  .tab.active { color: var(--accent); }
+  .tab-fab { position: relative; }
   .tab-fab-btn {
-    width: 56px;
-    height: 56px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    background: var(--tint-grad);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 20px rgba(167,139,250,0.5);
+    color: white;
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.45);
+    margin-top: -22px;
+    cursor: pointer;
     transition: transform 0.2s;
   }
   .tab-fab-btn:active { transform: scale(0.92); }
-  .tab-fab-btn svg {
-    width: 28px; height: 28px;
+  .tab-fab-btn svg { width: 26px; height: 26px; }
+
+  /* ═══ МОДАЛКА ═══ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+  .modal {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: var(--bg);
+    border-radius: 28px 28px 0 0;
+    z-index: 101;
+    padding: 14px 16px calc(20px + env(safe-area-inset-bottom));
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+  }
+  .modal.show { transform: translateY(0); }
+
+  .modal-handle {
+    width: 40px;
+    height: 5px;
+    background: #D1D1D6;
+    border-radius: 3px;
+    margin: 0 auto 14px;
+  }
+  .modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  /* Переключатель Расход/Доход */
+  .type-switch {
+    display: flex;
+    background: #E5E5EA;
+    border-radius: 12px;
+    padding: 4px;
+    margin: 14px 0;
+  }
+  .type-btn {
+    flex: 1;
+    padding: 9px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .type-btn.active {
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .type-btn.active.expense { color: var(--red); }
+  .type-btn.active.income { color: var(--green); }
+
+  /* Дисплей суммы */
+  .amount-display {
+    text-align: center;
+    margin: 14px 0 10px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .amount-value {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .amount-value.expense { color: var(--red); }
+  .amount-value.income { color: var(--green); }
+  .amount-currency {
+    font-size: 28px;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  /* Категории */
+  .cat-section-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 10px 4px 8px;
+  }
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .cat-btn {
+    background: white;
+    border-radius: 12px;
+    padding: 8px 2px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+  .cat-btn.active {
+    border-color: var(--accent);
+    background: rgba(108, 92, 231, 0.08);
+  }
+  .cat-emoji { font-size: 22px; margin-bottom: 2px; }
+  .cat-lbl {
+    font-size: 9px;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  .cat-btn.active .cat-lbl {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* Комментарий */
+  .comment-input {
+    width: 100%;
+    padding: 12px 14px;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text);
+    outline: none;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  .comment-input::placeholder { color: var(--muted); }
+
+  /* Numpad */
+  .numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .numpad-btn {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.1s;
+    font-family: inherit;
+  }
+  .numpad-btn:active {
+    background: #E5E5EA;
+    transform: scale(0.96);
+  }
+  .numpad-btn.action {
+    background: #E5E5EA;
+    font-size: 18px;
+  }
+
+  /* Кнопка сохранить */
+  .save-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
     color: white;
-    stroke-width: 2.5;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .save-btn:active { transform: scale(0.98); }
+  .save-btn:disabled {
+    background: #C7C7CC;
+    cursor: not-allowed;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 200;
+    opacity: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 </style>
 </head>
 <body>
-<!-- ═══════════ ГЛАВНЫЙ ЭКРАН ═══════════ -->
+
+<!-- ═══════════ ЭКРАН 1: ГЛАВНАЯ ═══════════ -->
 <div class="screen active" id="screen-home">
   <div class="header">
     <div>
-      <div class="greeting">Добрый день 👋</div>
-      <div class="username">Анна</div>
+      <div class="greeting-sub">Добрый день 👋</div>
+      <div class="greeting-name">Анна</div>
     </div>
     <div class="avatar">А</div>
   </div>
 
   <div class="balance-card">
-    <div class="balance-label">Общий баланс</div>
-    <div class="balance-amount">₽ 128 450</div>
-    <div class="balance-meta">
-      <span>+12 800 ₽</span>
-      <span class="down">8 200 ₽</span>
+    <div class="balance-lbl">Общий баланс</div>
+    <div class="balance-amount">
+      <span id="balance-value">128 450</span><span class="balance-currency">₽</span>
+    </div>
+    <div class="balance-change">
+      <span>↑</span> +12 340 ₽ за месяц
     </div>
   </div>
 
-  <div class="cards-grid">
-    <div class="card">
-      <div class="card-icon green">💰</div>
-      <div class="card-label">Доходы</div>
-      <div class="card-value">85 000 ₽</div>
+  <div class="mini-grid">
+    <div class="mini-card">
+      <div class="mini-icon green">📈</div>
+      <div class="mini-lbl">Доходы</div>
+      <div class="mini-val" id="income-value">85 000 ₽</div>
     </div>
-    <div class="card">
-      <div class="card-icon red">💸</div>
-      <div class="card-label">Расходы</div>
-      <div class="card-value">42 350 ₽</div>
+    <div class="mini-card">
+      <div class="mini-icon red">📉</div>
+      <div class="mini-lbl">Расходы</div>
+      <div class="mini-val" id="expense-value">42 580 ₽</div>
     </div>
-    <div class="card">
-      <div class="card-icon blue">📊</div>
-      <div class="card-label">Накопления</div>
-      <div class="card-value">28 600 ₽</div>
+    <div class="mini-card">
+      <div class="mini-icon blue">💳</div>
+      <div class="mini-lbl">Подписки</div>
+      <div class="mini-val">3 240 ₽</div>
     </div>
-    <div class="card">
-      <div class="card-icon orange">🎯</div>
-      <div class="card-label">До цели</div>
-      <div class="card-value">68%</div>
+    <div class="mini-card">
+      <div class="mini-icon orange">🎯</div>
+      <div class="mini-lbl">Накопления</div>
+      <div class="mini-val">45 000 ₽</div>
     </div>
   </div>
 
   <div class="ai-card">
     <div class="ai-emoji">🤖</div>
-    <div class="ai-text">
+    <div>
       <div class="ai-title">Совет от AI</div>
-      <div class="ai-desc">Вы тратите на кафе на 23% больше, чем в прошлом месяце. Попробуйте готовить дома 2 раза в неделю — сэкономите ~3 500 ₽.</div>
+      <div class="ai-text">Вы тратите на 23% больше на кафе, чем в прошлом месяце. Попробуйте готовить дома 2 раза в неделю — сэкономите ~4 000 ₽</div>
     </div>
   </div>
 
-  <div class="section-title">
-    Последние операции
-    <span class="section-link">Все</span>
+  <div class="section-head">
+    <div class="section-title">Последние операции</div>
+    <div class="section-link">Все</div>
   </div>
-  <div class="list">
-    <div class="exp">
-      <div class="exp-ico" style="background:rgba(255,149,0,0.15);">☕</div>
-      <div class="exp-info">
-        <div class="exp-name">Кофейня Surf</div>
-        <div class="exp-meta">Сегодня, 09:24 · Кафе</div>
-      </div>
-      <div class="exp-amt">-420 ₽</div>
-    </div>
-    <div class="exp">
-      <div class="exp-ico" style="background:rgba(52,199,89,0.15);">💼</div>
-      <div class="exp-info">
-        <div class="exp-name">Зарплата</div>
-        <div class="exp-meta">Вчера · Доход</div>
-      </div>
-      <div class="exp-amt income">+85 000 ₽</div>
-    </div>
-    <div class="exp">
-      <div class="exp-ico" style="background:rgba(0,122,255,0.15);">🛒</div>
-      <div class="exp-info">
-        <div class="exp-name">Перекрёсток</div>
-        <div class="exp-meta">Вчера, 19:45 · Продукты</div>
-      </div>
-      <div class="exp-amt">-2 340 ₽</div>
-    </div>
-    <div class="exp">
-      <div class="exp-ico" style="background:rgba(255,45,85,0.15);">🚕</div>
-      <div class="exp-info">
-        <div class="exp-name">Яндекс Такси</div>
-        <div class="exp-meta">14 мая · Транспорт</div>
-      </div>
-      <div class="exp-amt">-380 ₽</div>
-    </div>
+
+  <div class="ops-list" id="ops-list">
+    <!-- Сюда JS вставит операции -->
   </div>
 </div>
 
-<!-- ═══════════ ПОДПИСКИ ═══════════ -->
+<!-- ═══════════ ЭКРАН 2: ПОДПИСКИ ═══════════ -->
 <div class="screen" id="screen-subs">
   <div class="header">
     <div>
-      <div class="greeting">Управление</div>
-      <div class="username">Подписки</div>
+      <div class="greeting-sub">Активных: 6</div>
+      <div class="greeting-name">Подписки</div>
     </div>
     <div class="avatar">А</div>
   </div>
 
-  <div class="subs-summary">
-    <div>
-      <div class="subs-stat-val">4 280 ₽</div>
-      <div class="subs-stat-lbl">В месяц</div>
-    </div>
-    <div>
-      <div class="subs-stat-val">7</div>
-      <div class="subs-stat-lbl">Активных</div>
-    </div>
-    <div>
-      <div class="subs-stat-val">51 360 ₽</div>
-      <div class="subs-stat-lbl">В год</div>
-    </div>
+  <div class="balance-card" style="background: linear-gradient(135deg, #007AFF, #5AC8FA); box-shadow: 0 10px 30px rgba(0,122,255,0.3);">
+    <div class="balance-lbl">Всего в месяц</div>
+    <div class="balance-amount">3 240<span class="balance-currency">₽</span></div>
+    <div class="balance-change">Следующий платёж — 28 окт</div>
   </div>
 
-  <div class="subs-filters">
+  <div class="sub-filters">
     <div class="sub-filter active">Все</div>
     <div class="sub-filter">Развлечения</div>
-    <div class="sub-filter">Музыка</div>
     <div class="sub-filter">Работа</div>
+    <div class="sub-filter">Спорт</div>
   </div>
 
-  <div class="list">
-    <div class="sub-item">
-      <div class="sub-logo" style="background:#E50914;">N</div>
-      <div class="sub-info">
-        <div class="sub-name">Netflix</div>
-        <div class="sub-next">След. списание: 20 мая</div>
-      </div>
-      <div>
-        <div class="sub-price">899 ₽</div>
-        <div class="sub-period">/мес</div>
-      </div>
+  <div class="sub-card">
+    <div class="sub-logo" style="background:#E50914;">N</div>
+    <div class="sub-info">
+      <div class="sub-name">Netflix</div>
+      <div class="sub-date">Спишется 28 окт</div>
     </div>
-    <div class="sub-item">
-      <div class="sub-logo" style="background:#1DB954;">S</div>
-      <div class="sub-info">
-        <div class="sub-name">Spotify</div>
-        <div class="sub-next">След. списание: 25 мая</div>
-      </div>
-      <div>
-        <div class="sub-price">169 ₽</div>
-        <div class="sub-period">/мес</div>
-      </div>
+    <div class="sub-price">
+      <div class="sub-amount">799 ₽</div>
+      <div class="sub-period">в месяц</div>
     </div>
-    <div class="sub-item">
-      <div class="sub-logo" style="background:#FF0000;">Y</div>
-      <div class="sub-info">
-        <div class="sub-name">YouTube Premium</div>
-        <div class="sub-next">След. списание: 28 мая</div>
-      </div>
-      <div>
-        <div class="sub-price">299 ₽</div>
-        <div class="sub-period">/мес</div>
-      </div>
+  </div>
+  <div class="sub-card">
+    <div class="sub-logo" style="background:#1DB954;">♫</div>
+    <div class="sub-info">
+      <div class="sub-name">Spotify</div>
+      <div class="sub-date">Спишется 5 ноя</div>
     </div>
-    <div class="sub-item">
-      <div class="sub-logo" style="background:#000;">✦</div>
-      <div class="sub-info">
-        <div class="sub-name">Apple One</div>
-        <div class="sub-next">След. списание: 3 июня</div>
-      </div>
-      <div>
-        <div class="sub-price">365 ₽</div>
-        <div class="sub-period">/мес</div>
-      </div>
+    <div class="sub-price">
+      <div class="sub-amount">169 ₽</div>
+      <div class="sub-period">в месяц</div>
     </div>
-    <div class="sub-item">
-      <div class="sub-logo" style="background:#FF9900;">A</div>
-      <div class="sub-info">
-        <div class="sub-name">Яндекс Плюс</div>
-        <div class="sub-next">След. списание: 10 июня</div>
-      </div>
-      <div>
-        <div class="sub-price">399 ₽</div>
-        <div class="sub-period">/мес</div>
-      </div>
+  </div>
+  <div class="sub-card">
+    <div class="sub-logo" style="background:#000;">🍎</div>
+    <div class="sub-info">
+      <div class="sub-name">iCloud+ 200 ГБ</div>
+      <div class="sub-date">Спишется 12 ноя</div>
+    </div>
+    <div class="sub-price">
+      <div class="sub-amount">199 ₽</div>
+      <div class="sub-period">в месяц</div>
+    </div>
+  </div>
+  <div class="sub-card">
+    <div class="sub-logo" style="background:#FF9500;">⚡</div>
+    <div class="sub-info">
+      <div class="sub-name">ChatGPT Plus</div>
+      <div class="sub-date">Спишется 15 ноя</div>
+    </div>
+    <div class="sub-price">
+      <div class="sub-amount">1 990 ₽</div>
+      <div class="sub-period">в месяц</div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ ЦЕЛИ ═══════════ -->
+<!-- ═══════════ ЭКРАН 3: ЦЕЛИ ═══════════ -->
 <div class="screen" id="screen-goals">
   <div class="header">
     <div>
-      <div class="greeting">Накопления</div>
-      <div class="username">Мои цели</div>
+      <div class="greeting-sub">3 активные цели</div>
+      <div class="greeting-name">Мои цели</div>
     </div>
     <div class="avatar">А</div>
   </div>
 
   <div class="goal-card">
     <div class="goal-head">
-      <div class="goal-emoji">🏝️</div>
-      <div class="goal-info">
-        <div class="goal-name">Отпуск на Бали</div>
-        <div class="goal-deadline">До 15 августа · 92 дня</div>
+      <div class="goal-title">
+        <div class="goal-emoji">🏝</div>
+        <div>
+          <div class="goal-name">Отпуск на Бали</div>
+          <div class="goal-deadline">До марта 2026</div>
+        </div>
       </div>
       <div class="goal-percent">68%</div>
     </div>
-    <div class="goal-bar">
-      <div class="goal-fill" style="width:68%;"></div>
+    <div class="goal-progress">
+      <div class="goal-bar" style="width:68%;"></div>
     </div>
     <div class="goal-amounts">
-      <span><b>102 000 ₽</b> из 150 000 ₽</span>
-      <span>Осталось: 48 000 ₽</span>
+      <span class="goal-current">102 000 ₽</span>
+      <span class="goal-total">из 150 000 ₽</span>
     </div>
   </div>
 
   <div class="goal-card">
     <div class="goal-head">
-      <div class="goal-emoji">💻</div>
-      <div class="goal-info">
-        <div class="goal-name">MacBook Pro</div>
-        <div class="goal-deadline">До 1 декабря · 6 месяцев</div>
+      <div class="goal-title">
+        <div class="goal-emoji">💻</div>
+        <div>
+          <div class="goal-name">MacBook Pro</div>
+          <div class="goal-deadline">До июня 2026</div>
+        </div>
       </div>
       <div class="goal-percent">34%</div>
     </div>
-    <div class="goal-bar">
-      <div class="goal-fill" style="width:34%;"></div>
+    <div class="goal-progress">
+      <div class="goal-bar" style="width:34%; background: linear-gradient(90deg, #FF9500, #FF6B6B);"></div>
     </div>
     <div class="goal-amounts">
-      <span><b>85 000 ₽</b> из 250 000 ₽</span>
-      <span>Осталось: 165 000 ₽</span>
+      <span class="goal-current">85 000 ₽</span>
+      <span class="goal-total">из 250 000 ₽</span>
     </div>
   </div>
 
   <div class="goal-card">
     <div class="goal-head">
-      <div class="goal-emoji">🚗</div>
-      <div class="goal-info">
-        <div class="goal-name">На авто</div>
-        <div class="goal-deadline">До 2026 года · 18 месяцев</div>
+      <div class="goal-title">
+        <div class="goal-emoji">🚗</div>
+        <div>
+          <div class="goal-name">Новый автомобиль</div>
+          <div class="goal-deadline">До 2027 года</div>
+        </div>
       </div>
       <div class="goal-percent">12%</div>
     </div>
-    <div class="goal-bar">
-      <div class="goal-fill" style="width:12%;"></div>
+    <div class="goal-progress">
+      <div class="goal-bar" style="width:12%; background: linear-gradient(90deg, #34C759, #5AC8FA);"></div>
     </div>
     <div class="goal-amounts">
-      <span><b>180 000 ₽</b> из 1 500 000 ₽</span>
-      <span>Осталось: 1 320 000 ₽</span>
+      <span class="goal-current">180 000 ₽</span>
+      <span class="goal-total">из 1 500 000 ₽</span>
     </div>
   </div>
 
-  <div class="add-goal">
-    <span style="font-size:18px;">+</span>
-    <span>Добавить цель</span>
-  </div>
+  <button class="add-goal">+ Добавить новую цель</button>
 </div>
 
-<!-- ═══════════ СТАТИСТИКА ═══════════ -->
+<!-- ═══════════ ЭКРАН 4: СТАТИСТИКА ═══════════ -->
 <div class="screen" id="screen-stats">
   <div class="header">
     <div>
-      <div class="greeting">Аналитика</div>
-      <div class="username">Статистика</div>
+      <div class="greeting-sub">Октябрь 2025</div>
+      <div class="greeting-name">Статистика</div>
     </div>
     <div class="avatar">А</div>
   </div>
@@ -872,94 +881,47 @@
     <div class="period-tab">Год</div>
   </div>
 
-  <div class="donut-card">
-    <div class="donut-wrap">
-      <svg viewBox="0 0 180 180" width="180" height="180">
-        <circle cx="90" cy="90" r="70" fill="none" stroke="#F2F2F7" stroke-width="20"/>
-        <circle cx="90" cy="90" r="70" fill="none" stroke="#A78BFA" stroke-width="20"
-                stroke-dasharray="140 440" stroke-dashoffset="0" transform="rotate(-90 90 90)"/>
-        <circle cx="90" cy="90" r="70" fill="none" stroke="#FF9500" stroke-width="20"
-                stroke-dasharray="100 440" stroke-dashoffset="-140" transform="rotate(-90 90 90)"/>
-        <circle cx="90" cy="90" r="70" fill="none" stroke="#34C759" stroke-width="20"
-                stroke-dasharray="80 440" stroke-dashoffset="-240" transform="rotate(-90 90 90)"/>
-        <circle cx="90" cy="90" r="70" fill="none" stroke="#FF2D55" stroke-width="20"
-                stroke-dasharray="60 440" stroke-dashoffset="-320" transform="rotate(-90 90 90)"/>
+  <div class="chart-card">
+    <div class="chart-title">Расходы по категориям</div>
+    <div class="donut">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle cx="90" cy="90" r="70" fill="none" stroke="#F2F2F7" stroke-width="22"/>
+        <circle cx="90" cy="90" r="70" fill="none" stroke="#6C5CE7" stroke-width="22" stroke-dasharray="155 440" stroke-linecap="round"/>
+        <circle cx="90" cy="90" r="70" fill="none" stroke="#FF9500" stroke-width="22" stroke-dasharray="100 440" stroke-dashoffset="-155" stroke-linecap="round"/>
+        <circle cx="90" cy="90" r="70" fill="none" stroke="#34C759" stroke-width="22" stroke-dasharray="75 440" stroke-dashoffset="-255" stroke-linecap="round"/>
+        <circle cx="90" cy="90" r="70" fill="none" stroke="#007AFF" stroke-width="22" stroke-dasharray="55 440" stroke-dashoffset="-330" stroke-linecap="round"/>
       </svg>
       <div class="donut-center">
-        <div class="donut-total">42 350 ₽</div>
-        <div class="donut-label">Всего расходов</div>
+        <div class="donut-val">42 580 ₽</div>
+        <div class="donut-lbl">всего</div>
       </div>
     </div>
-    <div class="donut-legend">
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#A78BFA;"></div>
-        <div class="legend-name">Продукты</div>
-        <div class="legend-val">13 480 ₽</div>
+    <div class="cat-list">
+      <div class="cat-row">
+        <div class="cat-dot" style="background:#6C5CE7;"></div>
+        <div class="cat-row-name">🛒 Продукты</div>
+        <div class="cat-row-val">15 200 ₽</div>
       </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#FF9500;"></div>
-        <div class="legend-name">Кафе</div>
-        <div class="legend-val">9 620 ₽</div>
+      <div class="cat-row">
+        <div class="cat-dot" style="background:#FF9500;"></div>
+        <div class="cat-row-name">☕ Кафе и рестораны</div>
+        <div class="cat-row-val">9 800 ₽</div>
       </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#34C759;"></div>
-        <div class="legend-name">Транспорт</div>
-        <div class="legend-val">7 700 ₽</div>
+      <div class="cat-row">
+        <div class="cat-dot" style="background:#34C759;"></div>
+        <div class="cat-row-name">🚕 Транспорт</div>
+        <div class="cat-row-val">7 300 ₽</div>
       </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#FF2D55;"></div>
-        <div class="legend-name">Развлечения</div>
-        <div class="legend-val">5 780 ₽</div>
+      <div class="cat-row">
+        <div class="cat-dot" style="background:#007AFF;"></div>
+        <div class="cat-row-name">🛍 Покупки</div>
+        <div class="cat-row-val">5 400 ₽</div>
       </div>
-    </div>
-  </div>
-
-  <div class="chart-card">
-    <div style="font-size:15px; font-weight:700;">Расходы по дням</div>
-    <div class="chart-bars">
-      <div class="bar-wrap"><div class="bar" style="height:40%;"></div><div class="bar-label">Пн</div></div>
-      <div class="bar-wrap"><div class="bar" style="height:65%;"></div><div class="bar-label">Вт</div></div>
-      <div class="bar-wrap"><div class="bar" style="height:50%;"></div><div class="bar-label">Ср</div></div>
-      <div class="bar-wrap"><div class="bar" style="height:85%;"></div><div class="bar-label">Чт</div></div>
-      <div class="bar-wrap"><div class="bar" style="height:70%;"></div><div class="bar-label">Пт</div></div>
-      <div class="bar-wrap"><div class="bar" style="height:95%;"></div><div class="bar-label">Сб</div></div>
-      <div class="bar-wrap"><div class="bar" style="height:55%;"></div><div class="bar-label">Вс</div></div>
-    </div>
-  </div>
-
-  <div class="section-title">Топ категорий</div>
-  <div class="list">
-    <div class="cat-row">
-      <div class="cat-ico" style="background:rgba(167,139,250,0.15);">🛒</div>
-      <div class="cat-info">
-        <div class="cat-name">Продукты</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" style="width:80%; background:#A78BFA;"></div></div>
+      <div class="cat-row">
+        <div class="cat-dot" style="background:#8E8E93;"></div>
+        <div class="cat-row-name">📱 Прочее</div>
+        <div class="cat-row-val">4 880 ₽</div>
       </div>
-      <div class="cat-sum">13 480 ₽</div>
-    </div>
-    <div class="cat-row">
-      <div class="cat-ico" style="background:rgba(255,149,0,0.15);">☕</div>
-      <div class="cat-info">
-        <div class="cat-name">Кафе</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" style="width:60%; background:#FF9500;"></div></div>
-      </div>
-      <div class="cat-sum">9 620 ₽</div>
-    </div>
-    <div class="cat-row">
-      <div class="cat-ico" style="background:rgba(52,199,89,0.15);">🚕</div>
-      <div class="cat-info">
-        <div class="cat-name">Транспорт</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" style="width:45%; background:#34C759;"></div></div>
-      </div>
-      <div class="cat-sum">7 700 ₽</div>
-    </div>
-    <div class="cat-row">
-      <div class="cat-ico" style="background:rgba(255,45,85,0.15);">🎬</div>
-      <div class="cat-info">
-        <div class="cat-name">Развлечения</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" style="width:35%; background:#FF2D55;"></div></div>
-      </div>
-      <div class="cat-sum">5 780 ₽</div>
     </div>
   </div>
 </div>
@@ -967,84 +929,392 @@
 <!-- ═══════════ ТАБ-БАР ═══════════ -->
 <nav class="tabbar">
   <div class="tab active" data-screen="home">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
     </svg>
     <div class="tab-lbl">Главная</div>
   </div>
-
   <div class="tab" data-screen="subs">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
     </svg>
     <div class="tab-lbl">Подписки</div>
   </div>
-
   <div class="tab tab-fab">
-    <div class="tab-fab-btn">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="tab-fab-btn" id="open-modal">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
       </svg>
     </div>
   </div>
-
   <div class="tab" data-screen="goals">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
     </svg>
     <div class="tab-lbl">Цели</div>
   </div>
-
   <div class="tab" data-screen="stats">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
     </svg>
     <div class="tab-lbl">Статистика</div>
   </div>
 </nav>
 
+<!-- ═══════════ МОДАЛКА ДОБАВЛЕНИЯ ═══════════ -->
+<div class="modal-overlay" id="modal-overlay"></div>
+
+<div class="modal" id="add-modal">
+  <div class="modal-handle"></div>
+  <div class="modal-title">Новая операция</div>
+
+  <div class="type-switch">
+    <div class="type-btn active expense" data-type="expense">− Расход</div>
+    <div class="type-btn" data-type="income">+ Доход</div>
+  </div>
+
+  <div class="amount-display">
+    <span class="amount-value expense" id="amount-value">0</span>
+    <span class="amount-currency">₽</span>
+  </div>
+
+  <div class="cat-section-lbl">Категория</div>
+  <div class="cat-grid" id="cat-grid">
+    <!-- JS наполнит -->
+  </div>
+
+  <input type="text" class="comment-input" id="comment-input" placeholder="Комментарий (необязательно)" maxlength="50">
+
+  <div class="numpad">
+    <button class="numpad-btn" data-key="1">1</button>
+    <button class="numpad-btn" data-key="2">2</button>
+    <button class="numpad-btn" data-key="3">3</button>
+    <button class="numpad-btn" data-key="4">4</button>
+    <button class="numpad-btn" data-key="5">5</button>
+    <button class="numpad-btn" data-key="6">6</button>
+    <button class="numpad-btn" data-key="7">7</button>
+    <button class="numpad-btn" data-key="8">8</button>
+    <button class="numpad-btn" data-key="9">9</button>
+    <button class="numpad-btn action" data-key=".">,</button>
+    <button class="numpad-btn" data-key="0">0</button>
+    <button class="numpad-btn action" data-key="del">⌫</button>
+  </div>
+
+  <button class="save-btn" id="save-btn" disabled>Сохранить</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-  // Переключение экранов
-  const tabs = document.querySelectorAll('.tab[data-screen]');
-  const screens = document.querySelectorAll('.screen');
+  /* ═══════════ ДАННЫЕ ═══════════ */
+  const CATEGORIES = {
+    expense: [
+      { id: 'food', emoji: '🛒', name: 'Продукты' },
+      { id: 'cafe', emoji: '☕', name: 'Кафе' },
+      { id: 'transport', emoji: '🚕', name: 'Транспорт' },
+      { id: 'shop', emoji: '🛍', name: 'Покупки' },
+      { id: 'fun', emoji: '🎬', name: 'Развлечения' },
+      { id: 'home', emoji: '🏠', name: 'Жильё' },
+      { id: 'health', emoji: '💊', name: 'Здоровье' },
+      { id: 'travel', emoji: '✈️', name: 'Путешествия' },
+      { id: 'phone', emoji: '📱', name: 'Связь' },
+      { id: 'other_exp', emoji: '💡', name: 'Прочее' }
+    ],
+    income: [
+      { id: 'salary', emoji: '💼', name: 'Зарплата' },
+      { id: 'gift', emoji: '🎁', name: 'Подарок' },
+      { id: 'invest', emoji: '📈', name: 'Инвестиции' },
+      { id: 'freelance', emoji: '💸', name: 'Фриланс' },
+      { id: 'other_inc', emoji: '💰', name: 'Прочее' }
+    ]
+  };
 
-  tabs.forEach(tab => {
+  /* ═══════════ СОСТОЯНИЕ ═══════════ */
+  let state = {
+    type: 'expense',
+    amount: '0',
+    category: null,
+    comment: ''
+  };
+
+  // Загружаем операции из localStorage
+  let operations = JSON.parse(localStorage.getItem('operations') || '[]');
+
+  /* ═══════════ ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ ═══════════ */
+  document.querySelectorAll('.tab[data-screen]').forEach(tab => {
     tab.addEventListener('click', () => {
-      const target = tab.dataset.screen;
-
-      // Убираем активность со всех табов и экранов
-      tabs.forEach(t => t.classList.remove('active'));
-      screens.forEach(s => s.classList.remove('active'));
-
-      // Активируем нужный
+      const screen = tab.dataset.screen;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      document.getElementById('screen-' + target).classList.add('active');
-
-      // Скроллим вверх
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + screen).classList.add('active');
+      window.scrollTo(0, 0);
     });
   });
 
-  // FAB-кнопка (+)
-  document.querySelector('.tab-fab-btn').addEventListener('click', () => {
-    alert('➕ Добавить операцию\n\n(Здесь откроется форма)');
-  });
+  /* ═══════════ ОТКРЫТИЕ / ЗАКРЫТИЕ МОДАЛКИ ═══════════ */
+  const modal = document.getElementById('add-modal');
+  const overlay = document.getElementById('modal-overlay');
 
-  // Фильтры подписок
-  document.querySelectorAll('.sub-filter').forEach(f => {
-    f.addEventListener('click', () => {
-      document.querySelectorAll('.sub-filter').forEach(x => x.classList.remove('active'));
-      f.classList.add('active');
+  function openModal() {
+    renderCategories();
+    modal.classList.add('show');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    vibrate(10);
+  }
+
+  function closeModal() {
+    modal.classList.remove('show');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+    setTimeout(resetForm, 300);
+  }
+
+  document.getElementById('open-modal').addEventListener('click', openModal);
+  overlay.addEventListener('click', closeModal);
+
+  /* ═══════════ ПЕРЕКЛЮЧАТЕЛЬ ТИПА ═══════════ */
+  document.querySelectorAll('.type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.type = btn.dataset.type;
+      state.category = null;
+
+      document.querySelectorAll('.type-btn').forEach(b => {
+        b.classList.remove('active', 'expense', 'income');
+      });
+      btn.classList.add('active', state.type);
+
+      // Меняем цвет суммы
+      const amountEl = document.getElementById('amount-value');
+      amountEl.classList.remove('expense', 'income');
+      amountEl.classList.add(state.type);
+
+      renderCategories();
+      vibrate(5);
     });
   });
 
-  // Переключение периодов в статистике
-  document.querySelectorAll('.period-tab').forEach(p => {
-    p.addEventListener('click', () => {
-      document.querySelectorAll('.period-tab').forEach(x => x.classList.remove('active'));
-      p.classList.add('active');
+  /* ═══════════ РЕНДЕР КАТЕГОРИЙ ═══════════ */
+  function renderCategories() {
+    const grid = document.getElementById('cat-grid');
+    grid.innerHTML = '';
+    CATEGORIES[state.type].forEach(cat => {
+      const btn = document.createElement('div');
+      btn.className = 'cat-btn' + (state.category === cat.id ? ' active' : '');
+      btn.innerHTML = `
+        <div class="cat-emoji">${cat.emoji}</div>
+        <div class="cat-lbl">${cat.name}</div>
+      `;
+      btn.addEventListener('click', () => {
+        state.category = cat.id;
+        renderCategories();
+        updateSaveBtn();
+        vibrate(5);
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  /* ═══════════ NUMPAD ═══════════ */
+  document.querySelectorAll('.numpad-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.key;
+      vibrate(5);
+
+      if (key === 'del') {
+        state.amount = state.amount.length > 1 
+          ? state.amount.slice(0, -1) 
+          : '0';
+      } else if (key === '.') {
+        if (!state.amount.includes('.')) {
+          state.amount += '.';
+        }
+      } else {
+        // Если начинается с 0 — заменяем
+        if (state.amount === '0') {
+          state.amount = key;
+        } else {
+          // Лимит 9 цифр
+          if (state.amount.replace('.', '').length < 9) {
+            state.amount += key;
+          }
+        }
+      }
+
+      updateAmountDisplay();
+      updateSaveBtn();
     });
   });
+
+  function updateAmountDisplay() {
+    const el = document.getElementById('amount-value');
+    // Форматируем с пробелами
+    let display = state.amount;
+    if (display.includes('.')) {
+      const [int, dec] = display.split('.');
+      display = formatNum(int) + ',' + dec;
+    } else {
+      display = formatNum(display);
+    }
+    el.textContent = display;
+  }
+
+  function formatNum(str) {
+    return str.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
+  /* ═══════════ КОММЕНТАРИЙ ═══════════ */
+  document.getElementById('comment-input').addEventListener('input', (e) => {
+    state.comment = e.target.value;
+  });
+
+  /* ═══════════ КНОПКА СОХРАНИТЬ ═══════════ */
+  function updateSaveBtn() {
+    const btn = document.getElementById('save-btn');
+    const amount = parseFloat(state.amount);
+    btn.disabled = !(amount > 0 && state.category);
+  }
+
+  document.getElementById('save-btn').addEventListener('click', saveOperation);
+
+  function saveOperation() {
+    const amount = parseFloat(state.amount);
+    if (!amount || !state.category) return;
+
+    const cat = CATEGORIES[state.type].find(c => c.id === state.category);
+
+    const op = {
+      id: Date.now(),
+      type: state.type,
+      amount: amount,
+      category: cat,
+      comment: state.comment,
+      date: new Date().toISOString()
+    };
+
+    operations.unshift(op);
+    localStorage.setItem('operations', JSON.stringify(operations));
+
+    showToast(state.type === 'expense' ? '✅ Расход добавлен' : '✅ Доход добавлен');
+    vibrate([10, 30, 10]);
+
+    closeModal();
+    renderOperations();
+    updateBalance();
+  }
+
+  /* ═══════════ СБРОС ФОРМЫ ═══════════ */
+  function resetForm() {
+    state = {
+      type: 'expense',
+      amount: '0',
+      category: null,
+      comment: ''
+    };
+    document.getElementById('comment-input').value = '';
+    document.querySelectorAll('.type-btn').forEach(b => {
+      b.classList.remove('active', 'expense', 'income');
+    });
+    document.querySelector('.type-btn[data-type="expense"]').classList.add('active', 'expense');
+    const amountEl = document.getElementById('amount-value');
+    amountEl.classList.remove('expense', 'income');
+    amountEl.classList.add('expense');
+    updateAmountDisplay();
+    updateSaveBtn();
+  }
+
+  /* ═══════════ РЕНДЕР ОПЕРАЦИЙ НА ГЛАВНОЙ ═══════════ */
+  function renderOperations() {
+    const list = document.getElementById('ops-list');
+
+    if (operations.length === 0) {
+      list.innerHTML = '<div class="empty-list">Пока нет операций.<br>Нажми «+» чтобы добавить 💸</div>';
+      return;
+    }
+
+    // Показываем последние 5
+    const recent = operations.slice(0, 5);
+    list.innerHTML = recent.map(op => {
+      const sign = op.type === 'expense' ? '−' : '+';
+      const cls = op.type === 'expense' ? 'expense' : 'income';
+      const bgColor = op.type === 'expense' 
+        ? 'rgba(255,59,48,0.12)' 
+        : 'rgba(52,199,89,0.12)';
+      const title = op.comment || op.category.name;
+
+      return `
+        <div class="op-item">
+          <div class="op-icon" style="background:${bgColor};">${op.category.emoji}</div>
+          <div class="op-info">
+            <div class="op-title">${title}</div>
+            <div class="op-cat">${op.category.name} · ${formatDate(op.date)}</div>
+          </div>
+          <div class="op-amount ${cls}">${sign}${formatMoney(op.amount)} ₽</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function formatMoney(num) {
+    return num.toLocaleString('ru-RU', { 
+      minimumFractionDigits: 0, 
+      maximumFractionDigits: 2 
+    });
+  }
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    const today = new Date();
+    const yest = new Date();
+    yest.setDate(yest.getDate() - 1);
+
+    if (d.toDateString() === today.toDateString()) {
+      return 'Сегодня, ' + d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    }
+    if (d.toDateString() === yest.toDateString()) {
+      return 'Вчера';
+    }
+    return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+  }
+
+  /* ═══════════ ОБНОВЛЕНИЕ БАЛАНСА ═══════════ */
+  const BASE_BALANCE = 128450;
+  const BASE_INCOME = 85000;
+  const BASE_EXPENSE = 42580;
+
+  function updateBalance() {
+    let income = 0, expense = 0;
+    operations.forEach(op => {
+      if (op.type === 'income') income += op.amount;
+      else expense += op.amount;
+    });
+
+    const totalBalance = BASE_BALANCE + income - expense;
+    const totalIncome = BASE_INCOME + income;
+    const totalExpense = BASE_EXPENSE + expense;
+
+    document.getElementById('balance-value').textContent = formatMoney(totalBalance);
+    document.getElementById('income-value').textContent = formatMoney(totalIncome) + ' ₽';
+    document.getElementById('expense-value').textContent = formatMoney(totalExpense) + ' ₽';
+  }
+
+  /* ═══════════ TOAST ═══════════ */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  /* ═══════════ ВИБРАЦИЯ ═══════════ */
+  function vibrate(pattern) {
+    if (navigator.vibrate) navigator.vibrate(pattern);
+  }
+
+  /* ═══════════ ИНИЦИАЛИЗАЦИЯ ═══════════ */
+  renderOperations();
+  updateBalance();
 </script>
 
 </body>
