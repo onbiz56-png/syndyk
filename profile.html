@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сундук · Профиль</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, #FAF6F0 0%, #F5EBD8 100%);
+    min-height: 100vh;
+    color: #2C2416;
+    overflow-x: hidden;
+    padding-bottom: 100px;
+  }
+
+  .container {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* Шапка */
+  .header {
+    padding: 20px 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #2C2416;
+    letter-spacing: -0.5px;
+  }
+
+  .header-title-em {
+    font-size: 13px;
+    color: #8B6F47;
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  .btn-settings {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(212, 175, 55, 0.15);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8B6F47;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  /* Карточка профиля */
+  .profile-card {
+    margin: 0 20px 20px;
+    background: linear-gradient(135deg, #8B6F47 0%, #6B5435 100%);
+    border-radius: 24px;
+    padding: 24px 22px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(139, 111, 71, 0.35);
+  }
+
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .profile-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #F5D5D8 0%, #E8B8BD 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+  }
+
+  .profile-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .profile-name {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .profile-email {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 8px;
+  }
+
+  .profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #D4AF37 0%, #F5D76E 100%);
+    color: #4A3F2A;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+  }
+
+  /* Стаж */
+  .profile-stats {
+    display: flex;
+    gap: 14px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .profile-stat {
+    flex: 1;
+    text-align: center;
+  }
+
+  .profile-stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+
+  .profile-stat-label {
+    font-size: 10px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Текущий персонаж */
+  .current-butler {
+    margin: 0 20px 24px;
+    background: white;
+    border-radius: 20px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 16px rgba(74, 63, 42, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .current-butler:active { transform: scale(0.98); }
+
+  .butler-mini {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #F5D5D8 0%, #E8B8BD 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(232, 184, 189, 0.4);
+    border: 2px solid white;
+    position: relative;
+  }
+
+  .butler-mini-status {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #6BA368;
+    border: 2px solid white;
+  }
+
+  .butler-mini-info {
+    flex: 1;
+  }
+
+  .butler-mini-label {
+    font-size: 11px;
+    color: #8B6F47;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .butler-mini-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #2C2416;
+    margin-bottom: 2px;
+  }
+
+  .butler-mini-quote {
+    font-size: 12px;
+    color: #8B6F47;
+    font-style: italic;
+  }
+
+  .butler-mini-arrow {
+    color: #D4AF37;
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  /* Премиум-карточка */
+  .premium-card {
+    margin: 0 20px 24px;
+    background: linear-gradient(135deg, #FFF8E7 0%, #F5D76E 100%);
+    border-radius: 20px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+    border: 1.5px solid rgba(212, 175, 55, 0.3);
+    cursor: pointer;
+  }
+
+  .premium-card::before {
+    content: '💎';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 80px;
+    opacity: 0.15;
+    transform: rotate(15deg);
+  }
+
+  .premium-label {
+    font-size: 11px;
+    color: #8B6F47;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .premium-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #4A3F2A;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .premium-sub {
+    font-size: 12px;
+    color: #8B6F47;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .premium-btn {
+    background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(184, 148, 31, 0.4);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Группы настроек */
+  .settings-group {
+    margin: 0 20px 20px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(74, 63, 42, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+  }
+
+  .settings-group-title {
+    padding: 14px 18px 8px;
+    font-size: 11px;
+    color: #8B6F47;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  .settings-item {
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .settings-item:first-of-type {
+    border-top: none;
+  }
+
+  .settings-item:active {
+    background: #FFF8E7;
+  }
+
+  .settings-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .settings-icon.purple { background: linear-gradient(135deg, #E8D8F0 0%, #D4B8E8 100%); }
+  .settings-icon.blue { background: linear-gradient(135deg, #D4DCF0 0%, #B8C5E8 100%); }
+  .settings-icon.green { background: linear-gradient(135deg, #D4E8C8 0%, #B8D8A8 100%); }
+  .settings-icon.orange { background: linear-gradient(135deg, #F5D8C0 0%, #E8B894 100%); }
+  .settings-icon.pink { background: linear-gradient(135deg, #F5D5D8 0%, #E8B8BD 100%); }
+  .settings-icon.gold { background: linear-gradient(135deg, #F5E8B8 0%, #E8D078 100%); }
+
+  .settings-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .settings-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2C2416;
+    margin-bottom: 2px;
+  }
+
+  .settings-desc {
+    font-size: 12px;
+    color: #8B6F47;
+  }
+
+  .settings-value {
+    font-size: 13px;
+    color: #D4AF37;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+
+  .settings-arrow {
+    color: #C9A961;
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  /* Переключатель */
+  .toggle {
+    width: 48px;
+    height: 28px;
+    background: #E8DCC8;
+    border-radius: 100px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+
+  .toggle.active {
+    background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+  }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .toggle.active::after {
+    transform: translateX(20px);
+  }
+
+  /* Кнопка выхода */
+  .logout-btn {
+    margin: 8px 20px 24px;
+    width: calc(100% - 40px);
+    background: white;
+    border: 1.5px solid rgba(201, 91, 91, 0.3);
+    color: #C95B5B;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .logout-btn:active {
+    background: #FFF0F0;
+    transform: scale(0.98);
+  }
+
+  /* Версия */
+  .version {
+    text-align: center;
+    padding: 8px 20px 20px;
+    font-size: 11px;
+    color: #C9A961;
+    font-style: italic;
+  }
+
+  .version-em {
+    display: block;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+
+  /* Нижняя навигация */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 10px 16px 24px;
+    display: flex;
+    justify-content: space-around;
+    z-index: 100;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #8B6F47;
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .nav-item.active {
+    color: #D4AF37;
+  }
+
+  .nav-icon {
+    font-size: 22px;
+  }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Шапка -->
+  <div class="header">
+    <div>
+      <div class="header-title">Профиль 👤</div>
+      <div class="header-title-em">Ваш личный кабинет</div>
+    </div>
+    <button class="btn-settings">⚙️</button>
+  </div>
+
+  <!-- Карточка профиля -->
+  <div class="profile-card">
+    <div class="profile-top">
+      <div class="profile-avatar">👩</div>
+      <div class="profile-info">
+        <div class="profile-name">Анна Петрова</div>
+        <div class="profile-email">anna.petrova@mail.ru</div>
+        <div class="profile-badge">💎 Премиум</div>
+      </div>
+    </div>
+    <div class="profile-stats">
+      <div class="profile-stat">
+        <div class="profile-stat-value">127</div>
+        <div class="profile-stat-label">Дней с нами</div>
+      </div>
+      <div class="profile-stat">
+        <div class="profile-stat-value">2</div>
+        <div class="profile-stat-label">Целей ✓</div>
+      </div>
+      <div class="profile-stat">
+        <div class="profile-stat-value">48к</div>
+        <div class="profile-stat-label">Сэкономлено</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Текущий персонаж -->
+  <div class="current-butler">
+    <div class="butler-mini">
+      🔑
+      <div class="butler-mini-status"></div>
+    </div>
+    <div class="butler-mini-info">
+      <div class="butler-mini-label">Ваш дворецкий</div>
+      <div class="butler-mini-name">Аркадия</div>
+      <div class="butler-mini-quote">«Тёплая забота с лёгкой иронией»</div>
+    </div>
+    <div class="butler-mini-arrow">›</div>
+  </div>
+
+  <!-- Премиум -->
+  <div class="premium-card">
+    <div class="premium-label">💎 Активна подписка</div>
+    <div class="premium-title">Премиум до 15 марта 2025</div>
+    <div class="premium-sub">Доступны все функции и оба дворецких</div>
+    <button class="premium-btn">Управление подпиской</button>
+  </div>
+
+  <!-- Группа: Персонализация -->
+  <div class="settings-group">
+    <div class="settings-group-title">Персонализация</div>
+
+    <div class="settings-item">
+      <div class="settings-icon pink">🎭</div>
+      <div class="settings-info">
+        <div class="settings-name">Сменить дворецкого</div>
+        <div class="settings-desc">Аркадия или Аркадий</div>
+      </div>
+      <span class="settings-value">🔑</span>
+      <span class="settings-arrow">›</span>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon purple">💬</div>
+      <div class="settings-info">
+        <div class="settings-name">Стиль общения</div>
+        <div class="settings-desc">Тёплый и заботливый</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon orange">🎨</div>
+      <div class="settings-info">
+        <div class="settings-name">Тема оформления</div>
+        <div class="settings-desc">Светлая (классика)</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+  </div>
+
+  <!-- Группа: Уведомления -->
+  <div class="settings-group">
+    <div class="settings-group-title">Уведомления</div>
+
+    <div class="settings-item">
+      <div class="settings-icon blue">🔔</div>
+      <div class="settings-info">
+        <div class="settings-name">Push-уведомления</div>
+        <div class="settings-desc">Доклады и напоминания</div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon gold">💡</div>
+      <div class="settings-info">
+        <div class="settings-name">Подсказки дворецкого</div>
+        <div class="settings-desc">Советы и наблюдения</div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon green">📅</div>
+      <div class="settings-info">
+        <div class="settings-name">Еженедельный отчёт</div>
+        <div class="settings-desc">По воскресеньям в 19:00</div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+  </div>
+
+  <!-- Группа: Безопасность -->
+  <div class="settings-group">
+    <div class="settings-group-title">Безопасность</div>
+
+    <div class="settings-item">
+      <div class="settings-icon purple">🔐</div>
+      <div class="settings-info">
+        <div class="settings-name">Face ID / Touch ID</div>
+        <div class="settings-desc">Быстрый вход</div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon blue">🔑</div>
+      <div class="settings-info">
+        <div class="settings-name">PIN-код</div>
+        <div class="settings-desc">Установлен</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon green">☁️</div>
+      <div class="settings-info">
+        <div class="settings-name">Резервная копия</div>
+        <div class="settings-desc">Последняя: вчера в 23:14</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+  </div>
+
+  <!-- Группа: Данные -->
+  <div class="settings-group">
+    <div class="settings-group-title">Данные</div>
+
+    <div class="settings-item">
+      <div class="settings-icon orange">📤</div>
+      <div class="settings-info">
+        <div class="settings-name">Экспорт данных</div>
+        <div class="settings-desc">В Excel или PDF</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon blue">🔗</div>
+      <div class="settings-info">
+        <div class="settings-name">Подключённые счета</div>
+        <div class="settings-desc">3 банка</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon pink">🗑️</div>
+      <div class="settings-info">
+        <div class="settings-name">Очистить историю</div>
+        <div class="settings-desc">Удалить старые записи</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+  </div>
+
+  <!-- Группа: Поддержка -->
+  <div class="settings-group">
+    <div class="settings-group-title">Поддержка</div>
+
+    <div class="settings-item">
+      <div class="settings-icon gold">💌</div>
+      <div class="settings-info">
+        <div class="settings-name">Связаться с нами</div>
+        <div class="settings-desc">Поддержка 24/7</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon green">⭐</div>
+      <div class="settings-info">
+        <div class="settings-name">Оценить приложение</div>
+        <div class="settings-desc">Поделитесь мнением</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-icon purple">📜</div>
+      <div class="settings-info">
+        <div class="settings-name">О приложении</div>
+        <div class="settings-desc">Версия, лицензии</div>
+      </div>
+      <span class="settings-arrow">›</span>
+    </div>
+  </div>
+
+  <!-- Выход -->
+  <button class="logout-btn">
+    🚪 Выйти из аккаунта
+  </button>
+
+  <!-- Версия -->
+  <div class="version">
+    Сундук · версия 1.0.0
+    <span class="version-em">Сделано с заботой 🎩✨</span>
+  </div>
+
+</div>
+
+<!-- Нижняя навигация -->
+<div class="bottom-nav">
+  <button class="nav-item">
+    <div class="nav-icon">🏠</div>
+    <div>Главная</div>
+  </button>
+  <button class="nav-item">
+    <div class="nav-icon">📊</div>
+    <div>Тра
