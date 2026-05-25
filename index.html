@@ -1,68 +1,73 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Сундук — умный контроль финансов</title>
+<title>Сундук</title>
 <style>
-  /* ========================================
-     СУНДУК — ДИЗАЙН-СИСТЕМА
-     Палитра: нежные пастельные градиенты
-  ======================================== */
+  /* ============================================
+     СУНДУК — Apple iOS Design System
+  ============================================ */
 
   :root {
-    /* Основная палитра */
+    /* Пастельная палитра */
     --pink:        #FFB6D5;
-    --pink-soft:   #FFD6E8;
+    --pink-soft:   #FFE4F1;
     --coral:       #FFC4B0;
     --lavender:    #C8B6FF;
-    --lavender-soft: #E0D4FF;
+    --lavender-soft: #EDE5FF;
     --purple:      #B197FC;
     --blue:        #A8C8FF;
-    --blue-soft:   #C9DCFF;
+    --blue-soft:   #DDE9FF;
     --mint:        #B6E5D8;
-    --cream:       #FFF5F0;
+    --peach:       #FFD4C2;
 
-    /* Фон и текст */
-    --bg:          #FDF7F4;
-    --bg-card:     #FFFFFF;
-    --text:        #2D2A3E;
-    --text-soft:   #8B85A1;
-    --text-mute:   #B8B3C9;
+    /* iOS системные */
+    --bg:          #F7F4F9;
+    --bg-elev:     #FFFFFF;
+    --separator:   rgba(60, 60, 67, 0.08);
 
-    /* Акценты */
-    --accent:      #B197FC;
-    --accent-grad: linear-gradient(135deg, #C8B6FF 0%, #FFB6D5 100%);
-    --success:     #7DD3AE;
+    /* Текст (iOS Label colors) */
+    --label:       #1C1C1E;
+    --label-2:     #3C3C43;
+    --label-3:     #8E8E93;
+    --label-4:     #C7C7CC;
 
-    /* Тени */
-    --shadow-sm:   0 2px 8px rgba(177, 151, 252, 0.08);
-    --shadow-md:   0 4px 16px rgba(177, 151, 252, 0.12);
-    --shadow-lg:   0 8px 32px rgba(255, 182, 213, 0.25);
+    /* Акцент */
+    --tint:        #A78BFA;
+    --tint-grad:   linear-gradient(135deg, #C8B6FF 0%, #FFB6D5 100%);
+    --success:     #34C759;
+
+    /* iOS тени */
+    --shadow-card: 0 1px 2px rgba(60,60,67,0.04), 0 4px 16px rgba(60,60,67,0.06);
+    --shadow-soft: 0 8px 32px rgba(167, 139, 250, 0.18);
+    --shadow-lift: 0 12px 40px rgba(200, 182, 255, 0.45);
   }
 
-  /* ===== БАЗА ===== */
-  * { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    -webkit-tap-highlight-color: transparent; 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
   html, body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
     background: var(--bg);
-    color: var(--text);
+    color: var(--label);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01', 'cv11';
+    letter-spacing: -0.01em;
   }
 
   body {
-    padding-bottom: 100px;
-    background: 
-      radial-gradient(circle at 0% 0%, #FFE4F1 0%, transparent 40%),
-      radial-gradient(circle at 100% 0%, #E0D4FF 0%, transparent 40%),
+    padding-bottom: 110px;
+    background:
+      radial-gradient(circle at 0% 0%, #FFE4F1 0%, transparent 35%),
+      radial-gradient(circle at 100% 5%, #EDE5FF 0%, transparent 40%),
       var(--bg);
     background-attachment: fixed;
   }
@@ -70,226 +75,255 @@
   .container {
     max-width: 430px;
     margin: 0 auto;
-    padding: 24px 20px 0;
+    padding: 16px 20px 0;
   }
 
-  /* ===== ЛОГО ===== */
-  .brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  .brand-icon {
-    font-size: 18px;
-  }
-  .brand-name {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    background: var(--accent-grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* ===== ШАПКА ===== */
-  .header {
+  /* ============ ШАПКА ============ */
+  .nav-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    padding: 8px 0 4px;
+    margin-bottom: 24px;
   }
-  .header-greeting {
-    font-size: 14px;
-    color: var(--text-soft);
-    margin-bottom: 4px;
-    font-weight: 500;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  .header-name {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.5px;
-  }
-  .header-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--accent-grad);
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: var(--tint-grad);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    color: white;
-    font-size: 18px;
-    box-shadow: var(--shadow-md);
-    cursor: pointer;
-    transition: transform 0.2s;
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.35);
   }
-  .header-avatar:active { transform: scale(0.95); }
+  .brand-mark svg { width: 18px; height: 18px; color: white; }
+  .brand-name {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    color: var(--label);
+  }
+  .nav-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-elev);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .nav-btn:active { transform: scale(0.92); }
+  .nav-btn svg { width: 18px; height: 18px; color: var(--label-2); }
 
-  /* ===== БАЛАНС ===== */
-  .balance-card {
-    background: linear-gradient(135deg, #FFD6E8 0%, #E0D4FF 50%, #C9DCFF 100%);
+  /* ============ ПРИВЕТСТВИЕ ============ */
+  .greeting {
+    margin-bottom: 24px;
+  }
+  .greeting-hello {
+    font-size: 15px;
+    color: var(--label-3);
+    font-weight: 500;
+    margin-bottom: 2px;
+    letter-spacing: -0.2px;
+  }
+  .greeting-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--label);
+    letter-spacing: -0.7px;
+  }
+
+  /* ============ БАЛАНС ============ */
+  .balance {
+    background: linear-gradient(135deg, #FFD6E8 0%, #E0D4FF 45%, #C9DCFF 100%);
     border-radius: 28px;
-    padding: 28px 24px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-lg);
+    padding: 26px 24px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-lift);
     position: relative;
     overflow: hidden;
   }
-  .balance-card::before {
+  .balance::before {
     content: '';
     position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 200px;
-    height: 200px;
-    background: rgba(255,255,255,0.3);
+    top: -60%;
+    right: -25%;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5), transparent 70%);
     border-radius: 50%;
-    filter: blur(40px);
   }
-  .balance-label {
-    font-size: 13px;
-    color: var(--text);
-    opacity: 0.7;
-    margin-bottom: 10px;
-    font-weight: 500;
+  .balance-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
     position: relative;
     z-index: 1;
   }
+  .balance-label {
+    font-size: 13px;
+    color: var(--label-2);
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    opacity: 0.75;
+  }
+  .balance-eye {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .balance-eye svg { width: 14px; height: 14px; color: var(--label-2); }
+
   .balance-amount {
-    font-size: 44px;
+    font-size: 42px;
     font-weight: 700;
     letter-spacing: -1.5px;
-    color: var(--text);
+    color: var(--label);
     line-height: 1;
     position: relative;
     z-index: 1;
   }
-  .balance-amount .currency {
-    font-size: 26px;
-    color: var(--text);
-    opacity: 0.6;
-    margin-left: 4px;
-    font-weight: 500;
+  .balance-amount .cur {
+    font-size: 24px;
+    opacity: 0.55;
+    margin-left: 6px;
+    font-weight: 600;
   }
-  .balance-change {
+  .balance-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     margin-top: 14px;
     padding: 6px 12px;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.55);
     backdrop-filter: blur(10px);
-    color: #4A8B7A;
+    color: #1A7F4E;
     border-radius: 100px;
     font-size: 13px;
     font-weight: 600;
+    letter-spacing: -0.1px;
     position: relative;
     z-index: 1;
   }
+  .balance-pill svg { width: 12px; height: 12px; }
 
-  /* ===== СЕТКА КАРТОЧЕК 2x2 ===== */
-  .grid-2 {
+  /* ============ КАРТОЧКИ 2x2 ============ */
+  .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
-
   .card {
-    background: var(--bg-card);
+    background: var(--bg-elev);
     border-radius: 22px;
     padding: 18px;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-card);
     cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .card:active { 
-    transform: scale(0.97); 
-    box-shadow: var(--shadow-md);
-  }
+  .card:active { transform: scale(0.96); }
 
-  .card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
+  .card-ic {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
     margin-bottom: 14px;
   }
-  .card-label {
+  .card-ic svg { width: 20px; height: 20px; color: white; stroke-width: 2.2; }
+  .card-lbl {
     font-size: 13px;
-    color: var(--text-soft);
-    margin-bottom: 4px;
+    color: var(--label-3);
     font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: -0.1px;
   }
-  .card-value {
-    font-size: 18px;
+  .card-val {
+    font-size: 17px;
     font-weight: 700;
-    color: var(--text);
+    color: var(--label);
     letter-spacing: -0.3px;
   }
 
-  /* Градиентные иконки */
-  .ic-pink     { background: linear-gradient(135deg, #FFB6D5, #FFC4B0); }
-  .ic-lavender { background: linear-gradient(135deg, #C8B6FF, #FFB6D5); }
-  .ic-blue     { background: linear-gradient(135deg, #A8C8FF, #C8B6FF); }
-  .ic-mint     { background: linear-gradient(135deg, #B6E5D8, #A8C8FF); }
-  .ic-coral    { background: linear-gradient(135deg, #FFC4B0, #FFD6E8); }
-  .ic-purple   { background: linear-gradient(135deg, #B197FC, #A8C8FF); }
+  /* Градиенты иконок */
+  .g-pink     { background: linear-gradient(135deg, #FFB6D5, #FF8FB8); }
+  .g-lavender { background: linear-gradient(135deg, #C8B6FF, #A78BFA); }
+  .g-blue     { background: linear-gradient(135deg, #A8C8FF, #7BA8F7); }
+  .g-mint     { background: linear-gradient(135deg, #B6E5D8, #7DD3AE); }
+  .g-coral    { background: linear-gradient(135deg, #FFC4B0, #FF9B7D); }
+  .g-purple   { background: linear-gradient(135deg, #B197FC, #8A6FE8); }
 
-  /* ===== КАРТОЧКА БЛИЖАЙШЕГО СПИСАНИЯ ===== */
-  .upcoming-card {
+  /* ============ БЛИЖАЙШЕЕ СПИСАНИЕ ============ */
+  .upcoming {
     background: linear-gradient(135deg, #C8B6FF 0%, #FFB6D5 100%);
     border-radius: 24px;
-    padding: 22px;
+    padding: 20px 22px;
     color: white;
-    margin-bottom: 16px;
-    box-shadow: 0 10px 28px rgba(200, 182, 255, 0.5);
+    margin-bottom: 14px;
+    box-shadow: 0 12px 32px rgba(200, 182, 255, 0.5);
     position: relative;
     overflow: hidden;
   }
-  .upcoming-card::after {
+  .upcoming::after {
     content: '';
     position: absolute;
-    bottom: -40px;
+    bottom: -50px;
     left: -30px;
-    width: 150px;
-    height: 150px;
-    background: rgba(255,255,255,0.15);
+    width: 160px;
+    height: 160px;
+    background: rgba(255,255,255,0.12);
     border-radius: 50%;
   }
-  .upcoming-header {
+  .upcoming-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     position: relative;
     z-index: 1;
   }
-  .upcoming-title {
+  .upcoming-ttl {
     font-size: 13px;
-    opacity: 0.95;
     font-weight: 600;
+    opacity: 0.95;
     display: flex;
     align-items: center;
     gap: 6px;
+    letter-spacing: -0.1px;
   }
-  .upcoming-badge {
-    background: rgba(255,255,255,0.3);
+  .upcoming-ttl svg { width: 14px; height: 14px; }
+  .upcoming-tag {
+    background: rgba(255,255,255,0.28);
     backdrop-filter: blur(10px);
     padding: 5px 11px;
     border-radius: 100px;
     font-size: 11px;
     font-weight: 600;
+    letter-spacing: 0.1px;
   }
-  .upcoming-body {
+  .upcoming-row {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -297,139 +331,145 @@
     z-index: 1;
   }
   .upcoming-logo {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
     background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
   }
+  .upcoming-logo svg { width: 24px; height: 24px; color: #FF3B30; }
   .upcoming-info { flex: 1; }
   .upcoming-name {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
-    margin-bottom: 3px;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
   }
-  .upcoming-date {
+  .upcoming-when {
     font-size: 13px;
-    opacity: 0.9;
+    opacity: 0.88;
+    letter-spacing: -0.1px;
   }
-  .upcoming-price {
-    font-size: 22px;
+  .upcoming-sum {
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: -0.5px;
   }
 
-  /* ===== AI СОВЕТ ===== */
-  .ai-card {
-    background: var(--bg-card);
+  /* ============ AI СОВЕТ ============ */
+  .ai {
+    background: var(--bg-elev);
     border-radius: 22px;
-    padding: 18px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-card);
     display: flex;
     gap: 14px;
     align-items: flex-start;
-    border: 1.5px solid #F0EAFF;
+    border: 1px solid var(--lavender-soft);
   }
-  .ai-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
+  .ai-ic {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     background: linear-gradient(135deg, #B197FC, #C8B6FF);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(177, 151, 252, 0.3);
+    box-shadow: 0 6px 16px rgba(177, 151, 252, 0.35);
   }
-  .ai-content { flex: 1; }
-  .ai-label {
+  .ai-ic svg { width: 20px; height: 20px; color: white; stroke-width: 2.2; }
+  .ai-body { flex: 1; padding-top: 1px; }
+  .ai-lbl {
     font-size: 11px;
-    color: var(--accent);
+    color: var(--tint);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     margin-bottom: 5px;
   }
-  .ai-text {
+  .ai-txt {
     font-size: 14px;
-    color: var(--text);
-    line-height: 1.5;
+    color: var(--label);
+    line-height: 1.45;
+    letter-spacing: -0.1px;
   }
-  .ai-text b {
-    color: var(--accent);
-    font-weight: 700;
-  }
+  .ai-txt b { color: var(--tint); font-weight: 700; }
 
-  /* ===== СЕКЦИЯ ===== */
+  /* ============ СЕКЦИЯ ============ */
   .section-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 28px 0 14px;
+    margin: 28px 4px 14px;
   }
-  .section-title {
-    font-size: 19px;
+  .section-ttl {
+    font-size: 20px;
     font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.3px;
+    letter-spacing: -0.5px;
+    color: var(--label);
   }
-  .section-link {
-    font-size: 14px;
-    color: var(--accent);
+  .section-lnk {
+    font-size: 15px;
+    color: var(--tint);
     font-weight: 600;
-    text-decoration: none;
+    letter-spacing: -0.2px;
     cursor: pointer;
   }
 
-  /* ===== ТРАТЫ ===== */
-  .expense-item {
-    background: var(--bg-card);
-    border-radius: 18px;
-    padding: 14px;
-    margin-bottom: 10px;
+  /* ============ ТРАТЫ ============ */
+  .expenses {
+    background: var(--bg-elev);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .exp {
     display: flex;
     align-items: center;
     gap: 14px;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.2s;
+    padding: 14px 16px;
     cursor: pointer;
+    transition: background 0.15s;
   }
-  .expense-item:active { transform: scale(0.98); }
-  .expense-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
+  .exp:active { background: rgba(60,60,67,0.04); }
+  .exp + .exp { border-top: 0.5px solid var(--separator); }
+
+  .exp-ic {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
     flex-shrink: 0;
   }
-  .expense-info { flex: 1; }
-  .expense-name {
+  .exp-ic svg { width: 19px; height: 19px; color: white; stroke-width: 2.2; }
+  .exp-info { flex: 1; }
+  .exp-name {
     font-size: 15px;
     font-weight: 600;
-    color: var(--text);
+    letter-spacing: -0.2px;
+    color: var(--label);
     margin-bottom: 2px;
   }
-  .expense-cat {
+  .exp-cat {
     font-size: 12px;
-    color: var(--text-mute);
+    color: var(--label-3);
+    letter-spacing: -0.1px;
   }
-  .expense-amount {
+  .exp-sum {
     font-size: 16px;
     font-weight: 700;
-    color: var(--text);
     letter-spacing: -0.3px;
+    color: var(--label);
   }
 
-  /* ===== НИЖНЕЕ МЕНЮ ===== */
+  /* ============ TAB BAR ============ */
   .tabbar {
     position: fixed;
     bottom: 0;
@@ -437,11 +477,11 @@
     transform: translateX(-50%);
     width: 100%;
     max-width: 430px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-top: 1px solid rgba(177, 151, 252, 0.15);
-    padding: 12px 20px 28px;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border-top: 0.5px solid rgba(60,60,67,0.12);
+    padding: 10px 16px calc(24px + env(safe-area-inset-bottom));
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -451,34 +491,38 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 6px 10px;
-    color: var(--text-mute);
+    gap: 3px;
+    padding: 6px 8px;
+    color: var(--label-4);
     cursor: pointer;
-    transition: color 0.2s;
+    transition: color 0.2s, transform 0.2s;
     flex: 1;
   }
-  .tab.active { color: var(--accent); }
-  .tab-icon { font-size: 22px; }
-  .tab-label { font-size: 10px; font-weight: 600; }
+  .tab:active { transform: scale(0.92); }
+  .tab.active { color: var(--tint); }
+  .tab svg { width: 24px; height: 24px; stroke-width: 1.8; }
+  .tab.active svg { stroke-width: 2.2; }
+  .tab-lbl {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+  }
 
-  .tab-fab {
-    width: 56px;
-    height: 56px;
+  .fab {
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    background: var(--accent-grad);
+    background: var(--tint-grad);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 28px;
-    font-weight: 300;
-    box-shadow: 0 8px 24px rgba(177, 151, 252, 0.5);
-    margin-top: -28px;
+    box-shadow: 0 10px 28px rgba(167, 139, 250, 0.55);
+    margin-top: -26px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .tab-fab:active { transform: scale(0.92); }
+  .fab:active { transform: scale(0.9); }
+  .fab svg { width: 24px; height: 24px; color: white; stroke-width: 2.4; }
 
 </style>
 </head>
@@ -486,141 +530,99 @@
 
 <div class="container">
 
-  <!-- ЛОГО -->
-  <div class="brand">
-    <span class="brand-icon">🏰</span>
-    <span class="brand-name">СУНДУК</span>
+  <!-- НАВ БАР -->
+  <div class="nav-bar">
+    <div class="brand">
+      <div class="brand-mark">
+        <!-- icon: sparkles -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l1.9 5.2L19 10l-5.1 1.8L12 17l-1.9-5.2L5 10l5.1-1.8L12 3z"/>
+          <path d="M19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14z"/>
+        </svg>
+      </div>
+      <div class="brand-name">Сундук</div>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-btn">
+        <!-- search -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M21 21l-4.3-4.3"/>
+        </svg>
+      </div>
+      <div class="nav-btn">
+        <!-- bell -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/>
+          <path d="M10.3 21a1.94 1.94 0 003.4 0"/>
+        </svg>
+      </div>
+    </div>
   </div>
 
-  <!-- ШАПКА -->
-  <div class="header">
-    <div>
-      <div class="header-greeting">Добрый день 👋</div>
-      <div class="header-name">Анна</div>
-    </div>
-    <div class="header-avatar">А</div>
+  <!-- ПРИВЕТСТВИЕ -->
+  <div class="greeting">
+    <div class="greeting-hello">Добрый день</div>
+    <div class="greeting-name">Анна 👋</div>
   </div>
 
   <!-- БАЛАНС -->
-  <div class="balance-card">
-    <div class="balance-label">Баланс в этом месяце</div>
-    <div class="balance-amount">42 580<span class="currency">₽</span></div>
-    <div class="balance-change">↑ Экономия 3 200 ₽</div>
+  <div class="balance">
+    <div class="balance-top">
+      <div class="balance-label">Баланс этого месяца</div>
+      <div class="balance-eye">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+    </div>
+    <div class="balance-amount">42 580<span class="cur">₽</span></div>
+    <div class="balance-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 17l5-5 5 5M7 7l5 5 5-5"/>
+      </svg>
+      Экономия 3 200 ₽
+    </div>
   </div>
 
   <!-- 4 КАРТОЧКИ -->
-  <div class="grid-2">
+  <div class="grid">
     <div class="card">
-      <div class="card-icon ic-lavender">💳</div>
-      <div class="card-label">Подписки</div>
-      <div class="card-value">8 активных</div>
-    </div>
-    <div class="card">
-      <div class="card-icon ic-pink">📊</div>
-      <div class="card-label">Траты</div>
-      <div class="card-value">28 400 ₽</div>
-    </div>
-    <div class="card">
-      <div class="card-icon ic-mint">🎯</div>
-      <div class="card-label">Цели</div>
-      <div class="card-value">2 из 3</div>
-    </div>
-    <div class="card">
-      <div class="card-icon ic-blue">⚡</div>
-      <div class="card-label">Лимит</div>
-      <div class="card-value">68%</div>
-    </div>
-  </div>
-
-  <!-- БЛИЖАЙШЕЕ СПИСАНИЕ -->
-  <div class="upcoming-card">
-    <div class="upcoming-header">
-      <div class="upcoming-title">⏰ Ближайшее списание</div>
-      <div class="upcoming-badge">через 2 дня</div>
-    </div>
-    <div class="upcoming-body">
-      <div class="upcoming-logo">🎬</div>
-      <div class="upcoming-info">
-        <div class="upcoming-name">Кинопоиск</div>
-        <div class="upcoming-date">15 ноября</div>
+      <div class="card-ic g-lavender">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="3"/>
+          <path d="M2 10h20"/>
+        </svg>
       </div>
-      <div class="upcoming-price">399 ₽</div>
+      <div class="card-lbl">Подписки</div>
+      <div class="card-val">8 активных</div>
     </div>
-  </div>
 
-  <!-- AI СОВЕТ -->
-  <div class="ai-card">
-    <div class="ai-icon">🤖</div>
-    <div class="ai-content">
-      <div class="ai-label">Совет от AI</div>
-      <div class="ai-text">Вы не пользовались «Окко» 47 дней. Возможно, стоит отменить подписку и сэкономить <b>299 ₽ в месяц</b>.</div>
+    <div class="card">
+      <div class="card-ic g-pink">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="M7 14l4-4 4 4 5-5"/>
+        </svg>
+      </div>
+      <div class="card-lbl">Траты</div>
+      <div class="card-val">28 400 ₽</div>
     </div>
-  </div>
 
-  <!-- ТОП-ТРАТЫ -->
-  <div class="section-head">
-    <div class="section-title">Основные траты</div>
-    <a class="section-link">Все →</a>
-  </div>
-
-  <div class="expense-item">
-    <div class="expense-icon ic-pink">🛒</div>
-    <div class="expense-info">
-      <div class="expense-name">Продукты</div>
-      <div class="expense-cat">Пятёрочка, Вкусвилл</div>
+    <div class="card">
+      <div class="card-ic g-mint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <circle cx="12" cy="12" r="5"/>
+          <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="card-lbl">Цели</div>
+      <div class="card-val">2 из 3</div>
     </div>
-    <div class="expense-amount">12 400 ₽</div>
-  </div>
 
-  <div class="expense-item">
-    <div class="expense-icon ic-blue">🚗</div>
-    <div class="expense-info">
-      <div class="expense-name">Транспорт</div>
-      <div class="expense-cat">Яндекс Go, метро</div>
-    </div>
-    <div class="expense-amount">5 800 ₽</div>
-  </div>
-
-  <div class="expense-item">
-    <div class="expense-icon ic-coral">☕</div>
-    <div class="expense-info">
-      <div class="expense-name">Кафе</div>
-      <div class="expense-cat">Кофе и обеды</div>
-    </div>
-    <div class="expense-amount">4 200 ₽</div>
-  </div>
-
-  <div class="expense-item">
-    <div class="expense-icon ic-purple">🎮</div>
-    <div class="expense-info">
-      <div class="expense-name">Развлечения</div>
-      <div class="expense-cat">Кино, игры</div>
-    </div>
-    <div class="expense-amount">3 100 ₽</div>
-  </div>
-
-</div>
-
-<!-- НИЖНЕЕ МЕНЮ -->
-<div class="tabbar">
-  <div class="tab active">
-    <div class="tab-icon">🏠</div>
-    <div class="tab-label">Главная</div>
-  </div>
-  <div class="tab">
-    <div class="tab-icon">💳</div>
-    <div class="tab-label">Подписки</div>
-  </div>
-  <div class="tab-fab">+</div>
-  <div class="tab">
-    <div class="tab-icon">📊</div>
-    <div class="tab-label">Аналитика</div>
-  </div>
-  <div class="tab">
-    <div class="tab-icon">👤</div>
-    <div class="tab-label">Профиль</div>
-  </div>
-</div>
-
-</body>
-</html>
+    <div class="card">
+      <div class="card-ic g-blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L4 14h7l-
