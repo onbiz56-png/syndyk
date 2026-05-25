@@ -1,0 +1,640 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Подписки — Сундук</title>
+<style>
+  :root {
+    --pink:        #FFB6D5;
+    --pink-soft:   #FFE4F1;
+    --coral:       #FFC4B0;
+    --lavender:    #C8B6FF;
+    --lavender-soft: #EDE5FF;
+    --purple:      #B197FC;
+    --blue:        #A8C8FF;
+    --blue-soft:   #DDE9FF;
+    --mint:        #B6E5D8;
+    --peach:       #FFD4C2;
+
+    --bg:          #F7F4F9;
+    --bg-elev:     #FFFFFF;
+    --separator:   rgba(60, 60, 67, 0.08);
+
+    --label:       #1C1C1E;
+    --label-2:     #3C3C43;
+    --label-3:     #8E8E93;
+    --label-4:     #C7C7CC;
+
+    --tint:        #A78BFA;
+    --tint-grad:   linear-gradient(135deg, #C8B6FF 0%, #FFB6D5 100%);
+    --success:     #34C759;
+    --danger:      #FF3B30;
+    --warning:     #FF9500;
+
+    --shadow-card: 0 1px 2px rgba(60,60,67,0.04), 0 4px 16px rgba(60,60,67,0.06);
+    --shadow-lift: 0 12px 40px rgba(200, 182, 255, 0.45);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--label);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+  }
+
+  body {
+    padding-bottom: 110px;
+    background:
+      radial-gradient(circle at 0% 0%, #FFE4F1 0%, transparent 35%),
+      radial-gradient(circle at 100% 5%, #EDE5FF 0%, transparent 40%),
+      var(--bg);
+    background-attachment: fixed;
+  }
+
+  .container {
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 16px 20px 0;
+  }
+
+  /* ============ ШАПКА ============ */
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0 4px;
+    margin-bottom: 8px;
+  }
+  .nav-back {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-elev);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .nav-back:active { transform: scale(0.92); }
+  .nav-back svg { width: 18px; height: 18px; color: var(--label-2); }
+
+  .nav-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+  }
+
+  .nav-add {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--tint-grad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.4);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .nav-add:active { transform: scale(0.9); }
+  .nav-add svg { width: 18px; height: 18px; color: white; stroke-width: 2.5; }
+
+  /* ============ СВОДКА ============ */
+  .summary {
+    background: linear-gradient(135deg, #FFD6E8 0%, #E0D4FF 50%, #C9DCFF 100%);
+    border-radius: 28px;
+    padding: 24px;
+    margin: 20px 0 20px;
+    box-shadow: var(--shadow-lift);
+    position: relative;
+    overflow: hidden;
+  }
+  .summary::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -25%;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5), transparent 70%);
+    border-radius: 50%;
+  }
+  .summary-label {
+    font-size: 13px;
+    color: var(--label-2);
+    opacity: 0.75;
+    font-weight: 500;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .summary-amount {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1.2px;
+    line-height: 1;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .summary-amount .cur {
+    font-size: 22px;
+    opacity: 0.55;
+    margin-left: 4px;
+    font-weight: 600;
+  }
+  .summary-sub {
+    font-size: 14px;
+    color: var(--label-2);
+    opacity: 0.7;
+    font-weight: 500;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .summary-stats {
+    display: flex;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .summary-stat {
+    flex: 1;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 10px 12px;
+  }
+  .summary-stat-val {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--label);
+  }
+  .summary-stat-lbl {
+    font-size: 11px;
+    color: var(--label-2);
+    opacity: 0.7;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* ============ ФИЛЬТРЫ ============ */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 0 20px;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .chip {
+    padding: 8px 16px;
+    background: var(--bg-elev);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--label-2);
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: var(--shadow-card);
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .chip.active {
+    background: var(--tint-grad);
+    color: white;
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.4);
+  }
+  .chip:active { transform: scale(0.95); }
+
+  /* ============ КАЛЕНДАРЬ ============ */
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 4px 14px;
+  }
+  .section-ttl {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .section-lnk {
+    font-size: 15px;
+    color: var(--tint);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .calendar {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin: 0 -20px 24px;
+    padding: 4px 20px 8px;
+  }
+  .calendar::-webkit-scrollbar { display: none; }
+
+  .cal-day {
+    min-width: 80px;
+    background: var(--bg-elev);
+    border-radius: 18px;
+    padding: 12px 10px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+  }
+  .cal-day:active { transform: scale(0.96); }
+  .cal-day.today {
+    background: var(--tint-grad);
+    color: white;
+  }
+  .cal-day-name {
+    font-size: 11px;
+    color: var(--label-3);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .cal-day.today .cal-day-name { color: rgba(255,255,255,0.85); }
+
+  .cal-day-num {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .cal-day-sum {
+    font-size: 11px;
+    color: var(--label-3);
+    font-weight: 600;
+  }
+  .cal-day.today .cal-day-sum { color: rgba(255,255,255,0.9); }
+  .cal-day-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tint);
+    margin: 6px auto 0;
+  }
+  .cal-day.today .cal-day-dot { background: white; }
+
+  /* ============ СПИСОК ПОДПИСОК ============ */
+  .subs-list {
+    background: var(--bg-elev);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 20px;
+  }
+  .sub {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .sub:active { background: rgba(60,60,67,0.04); }
+  .sub + .sub { border-top: 0.5px solid var(--separator); }
+
+  .sub-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+  }
+  .sub-logo svg { width: 22px; height: 22px; }
+
+  .sub-info { flex: 1; min-width: 0; }
+  .sub-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    margin-bottom: 3px;
+    color: var(--label);
+  }
+  .sub-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--label-3);
+  }
+  .sub-meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--label-4);
+  }
+  .sub-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .sub-price {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--label);
+    margin-bottom: 3px;
+  }
+  .sub-period {
+    font-size: 11px;
+    color: var(--label-3);
+    font-weight: 500;
+  }
+
+  /* Статусы */
+  .sub-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+  .sub-status.active {
+    background: rgba(52, 199, 89, 0.12);
+    color: #1A7F4E;
+  }
+  .sub-status.warning {
+    background: rgba(255, 149, 0, 0.12);
+    color: #C26A00;
+  }
+  .sub-status.unused {
+    background: rgba(255, 59, 48, 0.12);
+    color: #C2271E;
+  }
+
+  /* Бренд-цвета логотипов */
+  .lg-netflix   { background: #E50914; }
+  .lg-spotify   { background: #1DB954; }
+  .lg-kinopoisk { background: linear-gradient(135deg, #FF6B00, #FF3B30); }
+  .lg-youtube   { background: #FF0000; }
+  .lg-yandex    { background: #FC3F1D; }
+  .lg-apple     { background: #1C1C1E; }
+  .lg-okko      { background: linear-gradient(135deg, #7C4DFF, #B388FF); }
+  .lg-vk        { background: #0077FF; }
+
+  /* ============ AI ИНСАЙТ ============ */
+  .ai {
+    background: linear-gradient(135deg, #EDE5FF 0%, #FFE4F1 100%);
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    border: 1px solid rgba(167, 139, 250, 0.15);
+  }
+  .ai-ic {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #B197FC, #C8B6FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px rgba(177, 151, 252, 0.35);
+  }
+  .ai-ic svg { width: 22px; height: 22px; color: white; stroke-width: 2.2; }
+  .ai-body { flex: 1; }
+  .ai-lbl {
+    font-size: 11px;
+    color: var(--tint);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 5px;
+  }
+  .ai-ttl {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--label);
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+  }
+  .ai-txt {
+    font-size: 13px;
+    color: var(--label-2);
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  .ai-btn {
+    background: white;
+    color: var(--tint);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.2);
+    transition: transform 0.15s;
+  }
+  .ai-btn:active { transform: scale(0.95); }
+
+  /* ============ TAB BAR ============ */
+  .tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border-top: 0.5px solid rgba(60,60,67,0.12);
+    padding: 10px 16px calc(24px + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 8px;
+    color: var(--label-4);
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    flex: 1;
+  }
+  .tab:active { transform: scale(0.92); }
+  .tab.active { color: var(--tint); }
+  .tab svg { width: 24px; height: 24px; stroke-width: 1.8; }
+  .tab.active svg { stroke-width: 2.2; }
+  .tab-lbl {
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .fab {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--tint-grad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 28px rgba(167, 139, 250, 0.55);
+    margin-top: -26px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .fab:active { transform: scale(0.9); }
+  .fab svg { width: 24px; height: 24px; color: white; stroke-width: 2.4; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ШАПКА -->
+  <div class="nav-bar">
+    <div class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </div>
+    <div class="nav-title">Подписки</div>
+    <div class="nav-add">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- СВОДКА -->
+  <div class="summary">
+    <div class="summary-label">В месяц на подписки</div>
+    <div class="summary-amount">3 847<span class="cur">₽</span></div>
+    <div class="summary-sub">≈ 46 164 ₽ в год</div>
+
+    <div class="summary-stats">
+      <div class="summary-stat">
+        <div class="summary-stat-val">8</div>
+        <div class="summary-stat-lbl">Активных</div>
+      </div>
+      <div class="summary-stat">
+        <div class="summary-stat-val">2</div>
+        <div class="summary-stat-lbl">Не используются</div>
+      </div>
+      <div class="summary-stat">
+        <div class="summary-stat-val">1</div>
+        <div class="summary-stat-lbl">Скоро спишут</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ФИЛЬТРЫ -->
+  <div class="filters">
+    <div class="chip active">Все · 10</div>
+    <div class="chip">Активные · 8</div>
+    <div class="chip">На паузе · 1</div>
+    <div class="chip">Отменённые · 1</div>
+  </div>
+
+  <!-- КАЛЕНДАРЬ СПИСАНИЙ -->
+  <div class="section-head">
+    <div class="section-ttl">Ближайшие списания</div>
+  </div>
+
+  <div class="calendar">
+    <div class="cal-day today">
+      <div class="cal-day-name">Пт</div>
+      <div class="cal-day-num">15</div>
+      <div class="cal-day-sum">399 ₽</div>
+      <div class="cal-day-dot"></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-name">Вс</div>
+      <div class="cal-day-num">17</div>
+      <div class="cal-day-sum">169 ₽</div>
+      <div class="cal-day-dot"></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-name">Ср</div>
+      <div class="cal-day-num">20</div>
+      <div class="cal-day-sum">599 ₽</div>
+      <div class="cal-day-dot"></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-name">Пт</div>
+      <div class="cal-day-num">22</div>
+      <div class="cal-day-sum">299 ₽</div>
+      <div class="cal-day-dot"></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-name">Пн</div>
+      <div class="cal-day-num">25</div>
+      <div class="cal-day-sum">899 ₽</div>
+      <div class="cal-day-dot"></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-name">Чт</div>
+      <div class="cal-day-num">28</div>
+      <div class="cal-day-sum">449 ₽</div>
+      <div class="cal-day-dot"></div>
+    </div>
+  </div>
+
+  <!-- AI ИНСАЙТ -->
+  <div class="ai">
+    <div class="ai-ic">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2l1.9 5.2L19 9l-5.1 1.8L12 16l-1.9-5.2L5 9l5.1-1.8L12 2z"/>
+      </svg>
+    </div>
+    <div class="ai-body">
+      <div class="ai-lbl">AI рекомендует</div>
+      <div class="ai-ttl">Можно сэкономить 598 ₽/мес</div>
+      <div class="ai-txt">Вы не открывали «Окко» 47 дней и «VK Музыку» 23 дня. Возможно, стоит отменить эти подписки.</div>
+      <button class="ai-btn">Подробнее →</button>
+    </div>
+  </div>
+
+  <!-- СПИСОК ПОДПИСОК -->
+  <div class="section-head">
+    <div class="section-ttl">Все подписки</div>
+    <div class="section-lnk">Сортировка</div>
+  </div>
+
+  <div class="subs-list">
+
+    <div class="sub">
+      <div class="sub-logo lg-kinopoisk">К</div>
+      <div class="sub-info">
+        <div class="sub-name">Кинопоиск</div>
+        <div class="sub-meta">
+          <span>15 ноября</span>
+          <span class="sub-meta-dot"></span>
+          <span class="sub-status warning">через 
