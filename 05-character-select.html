@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сундук · Выбор помощника</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, #F5F1EA 0%, #EBE4D6 100%);
+    min-height: 100vh;
+    color: #2C2416;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 60px 24px 40px;
+    position: relative;
+  }
+
+  /* Декоративные элементы */
+  .bg-decor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+  }
+
+  .bg-circle-1 {
+    width: 300px;
+    height: 300px;
+    background: #B8C5E8;
+    top: -100px;
+    left: -100px;
+  }
+
+  .bg-circle-2 {
+    width: 250px;
+    height: 250px;
+    background: #E8C5D4;
+    bottom: 100px;
+    right: -80px;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Заголовок */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeInDown 0.6s ease-out;
+  }
+
+  .logo-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #8B6F47;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2C2416;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #6B5D45;
+    line-height: 1.5;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .subtitle em {
+    font-style: italic;
+    color: #8B6F47;
+  }
+
+  /* Карточки персонажей */
+  .characters {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .character-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 28px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .character-card:nth-child(1) { animation-delay: 0.1s; }
+  .character-card:nth-child(2) { animation-delay: 0.2s; }
+
+  .character-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 0;
+  }
+
+  .character-card.arkady::before {
+    background: linear-gradient(135deg, #B8C5E8 0%, #9FB0DC 100%);
+  }
+
+  .character-card.arkadia::before {
+    background: linear-gradient(135deg, #E8C5D4 0%, #DCA9BD 100%);
+  }
+
+  .character-card.selected {
+    transform: translateY(-4px);
+    border-color: transparent;
+    box-shadow: 0 20px 60px rgba(139, 111, 71, 0.25);
+  }
+
+  .character-card.selected::before {
+    opacity: 1;
+  }
+
+  .character-card.selected .char-name,
+  .character-card.selected .char-role,
+  .character-card.selected .char-quote,
+  .character-card.selected .char-traits span {
+    color: white;
+  }
+
+  .character-card.selected .char-traits span {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .character-card.selected .char-quote {
+    background: rgba(255, 255, 255, 0.15);
+    border-left-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .char-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  /* Аватар */
+  .char-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #F5F1EA 0%, #EBE4D6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .character-card.arkady .char-avatar {
+    background: linear-gradient(135deg, #D4DCF0 0%, #B8C5E8 100%);
+  }
+
+  .character-card.arkadia .char-avatar {
+    background: linear-gradient(135deg, #F0D4DE 0%, #E8C5D4 100%);
+  }
+
+  .char-avatar-emoji {
+    font-size: 44px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+  .char-badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 2px solid white;
+  }
+
+  /* Информация */
+  .char-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .char-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2C2416;
+    margin-bottom: 2px;
+    letter-spacing: -0.3px;
+    transition: color 0.4s;
+  }
+
+  .char-role {
+    font-size: 13px;
+    color: #8B6F47;
+    margin-bottom: 12px;
+    font-style: italic;
+    transition: color 0.4s;
+  }
+
+  .char-traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .char-traits span {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: rgba(139, 111, 71, 0.08);
+    border: 1px solid rgba(139, 111, 71, 0.15);
+    border-radius: 100px;
+    color: #6B5D45;
+    transition: all 0.4s;
+  }
+
+  .char-quote {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #4A3F2A;
+    font-style: italic;
+    padding: 10px 12px;
+    background: rgba(139, 111, 71, 0.05);
+    border-left: 3px solid #C9A961;
+    border-radius: 8px;
+    transition: all 0.4s;
+  }
+
+  .char-quote::before {
+    content: '« ';
+    font-size: 16px;
+    color: #C9A961;
+    font-weight: 700;
+  }
+
+  .char-quote::after {
+    content: ' »';
+    font-size: 16px;
+    color: #C9A961;
+    font-weight: 700;
+  }
+
+  /* Индикатор выбора */
+  .selected-indicator {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .character-card.selected .selected-indicator {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .selected-indicator svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Кнопка */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeInUp 0.6s ease-out 0.3s backwards;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #2C2416 0%, #4A3F2A 100%);
+    color: white;
+    border: none;
+    padding: 18px 24px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(44, 36, 22, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: inherit;
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-primary:not(:disabled):active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary .btn-emoji {
+    font-size: 18px;
+    transition: transform 0.3s;
+  }
+
+  .btn-primary:not(:disabled):hover .btn-emoji {
+    transform: translateX(4px);
+  }
+
+  .hint {
+    text-align: center;
+    font-size: 12px;
+    color: #8B6F47;
+    line-height: 1.5;
+  }
+
+  .hint-icon {
+    display: inline-block;
+    margin-right: 4px;
+    opacity: 0.7;
+  }
+
+  /* Анимации */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .character-card.selected .char-avatar {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Декоративный фон -->
+  <div class="bg-decor">
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- Шапка -->
+    <div class="header">
+      <div class="logo-mini">
+        <span>🗝️</span>
+        <span>Сундук</span>
+      </div>
+      <h1>Выберите помощника</h1>
+      <p class="subtitle">Они позаботятся о Вашем хозяйстве<br><em>и подскажут, куда утекают денежки</em></p>
+    </div>
+
+    <!-- Карточки персонажей -->
+    <div class="characters">
+
+      <!-- АРКАДИЙ -->
+      <div class="character-card arkady" data-character="arkady" onclick="selectCharacter(this)">
+        <div class="selected-indicator">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 12L10 17L19 7" stroke="#2C2416" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="char-content">
+          <div class="char-avatar">
+            <span class="char-avatar-emoji">🎩</span>
+            <div class="char-badge">👨</div>
+          </div>
+          <div class="char-info">
+            <div class="char-name">Аркадий</div>
+            <div class="char-role">старший дворецкий</div>
+            <div class="char-traits">
+              <span>Учтивый</span>
+              <span>Аналитик</span>
+              <span>Честный</span>
+            </div>
+            <div class="char-quote">Добрый день, сударыня. Позвольте доложить о состоянии Ваших финансов.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- АРКАДИЯ -->
+      <div class="character-card arkadia" data-character="arkadia" onclick="selectCharacter(this)">
+        <div class="selected-indicator">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 12L10 17L19 7" stroke="#2C2416" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="char-content">
+          <div class="char-avatar">
+            <span class="char-avatar-emoji">🔑</span>
+            <div class="char-badge">👩</div>
+          </div>
+          <div class="char-info">
+            <div class="char-name">Аркадия</div>
+            <div class="char-role">старшая экономка</div>
+            <div class="char-traits">
+              <span>Заботливая</span>
+              <span>Мудрая</span>
+              <span>Бережливая</span>
+            </div>
+            <div class="char-quote">Голубушка, присаживайтесь. Сейчас разберёмся с Вашим хозяйством.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Действия -->
+    <div class="actions">
+      <button class="btn-primary" id="continueBtn" disabled onclick="continueWithCharacter()">
+        <span id="btnText">Выберите помощника</span>
+        <span class="btn-emoji" id="btnEmoji" style="display:none;">→</span>
+      </button>
+      <p class="hint">
+        <span class="hint-icon">⚙️</span>
+        Можно поменять в любое время в настройках
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let selectedCharacter = null;
+
+  function selectCharacter(card) {
+    // Снимаем выделение со всех
+    document.querySelectorAll('.character-card').forEach(c => c.classList.remove('selected'));
+
+    // Выделяем выбранную
+    card.classList.add('selected');
+    selectedCharacter = card.dataset.character;
+
+    // Обновляем кнопку
+    const btn = document.getElementById('continueBtn');
+    const btnText = document.getElementById('btnText');
+    const btnEmoji = document.getElementById('btnEmoji');
+
+    btn.disabled = false;
+    btnEmoji.style.display = 'inline';
+
+    if (selectedCharacter === 'arkady') {
+      btnText.textContent = 'Познакомиться с Аркадием';
+    } else {
+      btnText.textContent = 'Познакомиться с Аркадией';
+    }
+
+    // Лёгкая вибрация (если поддерживается)
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+
+  function continueWithCharacter() {
+    if (!selectedCharacter) return;
+
+    const name = selectedCharacter === 'arkady' ? 'Аркадий' : 'Аркадия';
+    const greeting = selectedCharacter === 'arkady' 
+      ? '🎩 Аркадий ожидает Вас в гостиной...' 
+      : '🔑 Аркадия накрывает на стол...';
+
+    alert(greeting + '\n\nДалее откроется чат с ' + name + '.');
+  }
+</script>
+</body>
+</html>
