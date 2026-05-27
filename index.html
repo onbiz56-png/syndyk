@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,45 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Сундук</title>
 <style>
-  /* ============================================
-     СУНДУК — Apple iOS Design System
-  ============================================ */
-
-  :root {
-    /* Пастельная палитра */
-    --pink:        #FFB6D5;
-    --pink-soft:   #FFE4F1;
-    --coral:       #FFC4B0;
-    --lavender:    #C8B6FF;
-    --lavender-soft: #EDE5FF;
-    --purple:      #B197FC;
-    --blue:        #A8C8FF;
-    --blue-soft:   #DDE9FF;
-    --mint:        #B6E5D8;
-    --peach:       #FFD4C2;
-
-    /* iOS системные */
-    --bg:          #F7F4F9;
-    --bg-elev:     #FFFFFF;
-    --separator:   rgba(60, 60, 67, 0.08);
-
-    /* Текст (iOS Label colors) */
-    --label:       #1C1C1E;
-    --label-2:     #3C3C43;
-    --label-3:     #8E8E93;
-    --label-4:     #C7C7CC;
-
-    /* Акцент */
-    --tint:        #A78BFA;
-    --tint-grad:   linear-gradient(135deg, #C8B6FF 0%, #FFB6D5 100%);
-    --success:     #34C759;
-
-    /* iOS тени */
-    --shadow-card: 0 1px 2px rgba(60,60,67,0.04), 0 4px 16px rgba(60,60,67,0.06);
-    --shadow-soft: 0 8px 32px rgba(167, 139, 250, 0.18);
-    --shadow-lift: 0 12px 40px rgba(200, 182, 255, 0.45);
-  }
-
   * {
     margin: 0;
     padding: 0;
@@ -51,459 +13,521 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  html, body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--label);
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'ss01', 'cv11';
-    letter-spacing: -0.01em;
+  :root {
+    --bg: #F7F5FB;
+    --bg-elev: #FFFFFF;
+    --label: #1C1C1E;
+    --label-2: #3A3A3C;
+    --label-3: #8E8E93;
+    --tint: #A78BFA;
+    --tint-2: #F0ABFC;
+    --tint-grad: linear-gradient(135deg, #A78BFA 0%, #F0ABFC 100%);
+    --shadow-card: 0 4px 16px rgba(167, 139, 250, 0.12);
+    --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.04);
   }
 
   body {
-    padding-bottom: 110px;
-    background:
-      radial-gradient(circle at 0% 0%, #FFE4F1 0%, transparent 35%),
-      radial-gradient(circle at 100% 5%, #EDE5FF 0%, transparent 40%),
-      var(--bg);
-    background-attachment: fixed;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--label);
+    min-height: 100vh;
+    padding-bottom: 100px;
+    -webkit-font-smoothing: antialiased;
   }
 
   .container {
     max-width: 430px;
     margin: 0 auto;
-    padding: 16px 20px 0;
+    padding: 14px 18px 0;
   }
 
-  /* ============ ШАПКА ============ */
-  .nav-bar {
+  /* НАВБАР */
+  .navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 8px 0 4px;
-    margin-bottom: 24px;
+    justify-content: space-between;
+    margin-bottom: 22px;
   }
+
   .brand {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
+
   .brand-mark {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
     background: var(--tint-grad);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.35);
+    box-shadow: 0 6px 18px rgba(167, 139, 250, 0.45);
   }
-  .brand-mark svg { width: 18px; height: 18px; color: white; }
+
+  .brand-mark svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+    stroke-width: 2.2;
+  }
+
   .brand-name {
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.4px;
-    color: var(--label);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
   }
+
   .nav-actions {
     display: flex;
     gap: 8px;
   }
+
   .nav-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
     background: var(--bg-elev);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-soft);
     cursor: pointer;
-    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .nav-btn:active { transform: scale(0.92); }
-  .nav-btn svg { width: 18px; height: 18px; color: var(--label-2); }
 
-  /* ============ ПРИВЕТСТВИЕ ============ */
+  .nav-btn svg {
+    width: 18px;
+    height: 18px;
+    color: var(--label-2);
+    stroke-width: 2;
+  }
+
+  /* ПРИВЕТСТВИЕ */
   .greeting {
-    margin-bottom: 24px;
-  }
-  .greeting-hello {
-    font-size: 15px;
-    color: var(--label-3);
-    font-weight: 500;
-    margin-bottom: 2px;
-    letter-spacing: -0.2px;
-  }
-  .greeting-name {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--label);
-    letter-spacing: -0.7px;
+    margin-bottom: 18px;
   }
 
-  /* ============ БАЛАНС ============ */
+  .greeting-hello {
+    font-size: 14px;
+    color: var(--label-3);
+    letter-spacing: 0.1px;
+    margin-bottom: 2px;
+  }
+
+  .greeting-name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  /* БАЛАНС */
   .balance {
-    background: linear-gradient(135deg, #FFD6E8 0%, #E0D4FF 45%, #C9DCFF 100%);
-    border-radius: 28px;
-    padding: 26px 24px;
-    margin-bottom: 14px;
-    box-shadow: var(--shadow-lift);
+    background: var(--tint-grad);
+    border-radius: 26px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+    color: white;
+    box-shadow: 0 14px 32px rgba(167, 139, 250, 0.4);
     position: relative;
     overflow: hidden;
   }
+
   .balance::before {
     content: '';
     position: absolute;
-    top: -60%;
-    right: -25%;
-    width: 240px;
-    height: 240px;
-    background: radial-gradient(circle, rgba(255,255,255,0.5), transparent 70%);
+    top: -50%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%);
     border-radius: 50%;
   }
+
   .balance-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     position: relative;
-    z-index: 1;
   }
+
   .balance-label {
     font-size: 13px;
-    color: var(--label-2);
-    font-weight: 500;
-    letter-spacing: -0.1px;
-    opacity: 0.75;
+    opacity: 0.85;
+    letter-spacing: 0.2px;
   }
+
   .balance-eye {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.4);
-    backdrop-filter: blur(10px);
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.18);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
   }
-  .balance-eye svg { width: 14px; height: 14px; color: var(--label-2); }
+
+  .balance-eye svg {
+    width: 15px;
+    height: 15px;
+    color: white;
+    stroke-width: 2;
+  }
 
   .balance-amount {
-    font-size: 42px;
+    font-size: 34px;
     font-weight: 700;
-    letter-spacing: -1.5px;
-    color: var(--label);
-    line-height: 1;
+    letter-spacing: -0.8px;
+    margin-bottom: 12px;
     position: relative;
-    z-index: 1;
   }
-  .balance-amount .cur {
-    font-size: 24px;
-    opacity: 0.55;
-    margin-left: 6px;
-    font-weight: 600;
+
+  .cur {
+    font-size: 22px;
+    opacity: 0.85;
+    margin-left: 4px;
   }
+
   .balance-pill {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    margin-top: 14px;
-    padding: 6px 12px;
-    background: rgba(255,255,255,0.55);
-    backdrop-filter: blur(10px);
-    color: #1A7F4E;
+    background: rgba(255,255,255,0.22);
+    padding: 6px 11px;
     border-radius: 100px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: -0.1px;
+    backdrop-filter: blur(8px);
     position: relative;
-    z-index: 1;
   }
-  .balance-pill svg { width: 12px; height: 12px; }
 
-  /* ============ КАРТОЧКИ 2x2 ============ */
+  .balance-pill svg {
+    width: 13px;
+    height: 13px;
+    color: white;
+  }
+
+  /* СЕТКА 4 КАРТОЧКИ 2x2 */
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
+
   .card {
     background: var(--bg-elev);
     border-radius: 22px;
-    padding: 18px;
+    padding: 16px;
     box-shadow: var(--shadow-card);
-    cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  .card:active { transform: scale(0.96); }
 
   .card-ic {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 14px;
-  }
-  .card-ic svg { width: 20px; height: 20px; color: white; stroke-width: 2.2; }
-  .card-lbl {
-    font-size: 13px;
-    color: var(--label-3);
-    font-weight: 500;
-    margin-bottom: 4px;
-    letter-spacing: -0.1px;
-  }
-  .card-val {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--label);
-    letter-spacing: -0.3px;
   }
 
-  /* Градиенты иконок */
-  .g-pink     { background: linear-gradient(135deg, #FFB6D5, #FF8FB8); }
-  .g-lavender { background: linear-gradient(135deg, #C8B6FF, #A78BFA); }
-  .g-blue     { background: linear-gradient(135deg, #A8C8FF, #7BA8F7); }
-  .g-mint     { background: linear-gradient(135deg, #B6E5D8, #7DD3AE); }
-  .g-coral    { background: linear-gradient(135deg, #FFC4B0, #FF9B7D); }
-  .g-purple   { background: linear-gradient(135deg, #B197FC, #8A6FE8); }
-
-  /* ============ БЛИЖАЙШЕЕ СПИСАНИЕ ============ */
-  .upcoming {
-    background: linear-gradient(135deg, #C8B6FF 0%, #FFB6D5 100%);
-    border-radius: 24px;
-    padding: 20px 22px;
+  .card-ic svg {
+    width: 21px;
+    height: 21px;
     color: white;
+    stroke-width: 2.2;
+    fill: none;
+  }
+
+  .g-lavender { background: linear-gradient(135deg, #A78BFA 0%, #C4B5FD 100%); }
+  .g-pink     { background: linear-gradient(135deg, #F0ABFC 0%, #F9A8D4 100%); }
+  .g-mint     { background: linear-gradient(135deg, #6EE7B7 0%, #34D399 100%); }
+  .g-blue     { background: linear-gradient(135deg, #60A5FA 0%, #38BDF8 100%); }
+  .g-coral    { background: linear-gradient(135deg, #FB923C 0%, #F472B6 100%); }
+  .g-purple   { background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%); }
+
+  .card-lbl {
+    font-size: 12px;
+    color: var(--label-3);
+    letter-spacing: 0.1px;
+  }
+
+  .card-val {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.1px;
+    color: var(--label);
+  }
+
+  /* БЛИЖАЙШЕЕ СПИСАНИЕ — на всю ширину */
+  .upcoming {
+    background: var(--bg-elev);
+    border-radius: 22px;
+    padding: 16px 18px;
     margin-bottom: 14px;
-    box-shadow: 0 12px 32px rgba(200, 182, 255, 0.5);
-    position: relative;
-    overflow: hidden;
+    box-shadow: var(--shadow-card);
   }
-  .upcoming::after {
-    content: '';
-    position: absolute;
-    bottom: -50px;
-    left: -30px;
-    width: 160px;
-    height: 160px;
-    background: rgba(255,255,255,0.12);
-    border-radius: 50%;
-  }
+
   .upcoming-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
+    margin-bottom: 14px;
   }
+
   .upcoming-ttl {
-    font-size: 13px;
-    font-weight: 600;
-    opacity: 0.95;
     display: flex;
     align-items: center;
-    gap: 6px;
-    letter-spacing: -0.1px;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--label);
   }
-  .upcoming-ttl svg { width: 14px; height: 14px; }
+
+  .upcoming-ttl svg {
+    width: 16px;
+    height: 16px;
+    color: var(--tint);
+  }
+
   .upcoming-tag {
-    background: rgba(255,255,255,0.28);
-    backdrop-filter: blur(10px);
-    padding: 5px 11px;
+    background: rgba(167, 139, 250, 0.12);
+    color: var(--tint);
+    padding: 4px 10px;
     border-radius: 100px;
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.1px;
   }
+
   .upcoming-row {
     display: flex;
     align-items: center;
-    gap: 14px;
-    position: relative;
-    z-index: 1;
+    gap: 12px;
   }
-  .
-  upcoming-logo {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: white;
+
+  .upcoming-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: #1C1C1E;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-  }
-  .upcoming-logo svg { width: 24px; height: 24px; color: #FF3B30; }
-  .upcoming-info { flex: 1; }
-  .upcoming-name {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    margin-bottom: 2px;
-  }
-  .upcoming-when {
-    font-size: 13px;
-    opacity: 0.88;
-    letter-spacing: -0.1px;
-  }
-  .upcoming-sum {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    flex-shrink: 0;
   }
 
-  /* ============ AI СОВЕТ ============ */
+  .upcoming-logo svg {
+    width: 22px;
+    height: 22px;
+    color: white;
+  }
+
+  .upcoming-info {
+    flex: 1;
+  }
+
+  .upcoming-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--label);
+    margin-bottom: 2px;
+  }
+
+  .upcoming-when {
+    font-size: 12px;
+    color: var(--label-3);
+  }
+
+  .upcoming-sum {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--label);
+  }
+
+  /* AI СОВЕТ — на всю ширину */
   .ai {
-    background: var(--bg-elev);
+    background: linear-gradient(135deg, #FEF3C7 0%, #FCE7F3 100%);
     border-radius: 22px;
-    padding: 16px;
-    margin-bottom: 14px;
-    box-shadow: var(--shadow-card);
+    padding: 16px 18px;
+    margin-bottom: 18px;
     display: flex;
     gap: 14px;
     align-items: flex-start;
-    border: 1px solid var(--lavender-soft);
+    box-shadow: 0 4px 16px rgba(251, 191, 36, 0.15);
   }
+
   .ai-ic {
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #B197FC, #C8B6FF);
+    background: linear-gradient(135deg, #FBBF24 0%, #F472B6 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 6px 16px rgba(177, 151, 252, 0.35);
+    box-shadow: 0 6px 16px rgba(251, 191, 36, 0.35);
   }
-  .ai-ic svg { width: 20px; height: 20px; color: white; stroke-width: 2.2; }
-  .ai-body { flex: 1; padding-top: 1px; }
+
+  .ai-ic svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+    stroke-width: 2.2;
+    fill: none;
+  }
+
+  .ai-body {
+    flex: 1;
+  }
+
   .ai-lbl {
     font-size: 11px;
-    color: var(--tint);
     font-weight: 700;
+    color: #92400E;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
   }
+
   .ai-txt {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--label);
     line-height: 1.45;
-    letter-spacing: -0.1px;
   }
-  .ai-txt b { color: var(--tint); font-weight: 700; }
 
-  /* ============ СЕКЦИЯ ============ */
+  .ai-txt b {
+    font-weight: 700;
+  }
+
+  /* ЗАГОЛОВОК СЕКЦИИ */
   .section-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 28px 4px 14px;
+    margin-bottom: 12px;
+    padding: 0 2px;
   }
+
   .section-ttl {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    letter-spacing: -0.5px;
-    color: var(--label);
+    letter-spacing: -0.3px;
   }
+
   .section-lnk {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--tint);
     font-weight: 600;
-    letter-spacing: -0.2px;
     cursor: pointer;
   }
 
-  /* ============ ТРАТЫ ============ */
+  /* СПИСОК ТРАТ */
   .expenses {
     background: var(--bg-elev);
     border-radius: 22px;
-    overflow: hidden;
+    padding: 6px 16px;
     box-shadow: var(--shadow-card);
   }
+
   .exp {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
-    cursor: pointer;
-    transition: background 0.15s;
+    gap: 13px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
-  .exp:active { background: rgba(60,60,67,0.04); }
-  .exp + .exp { border-top: 0.5px solid var(--separator); }
+
+  .exp:last-child {
+    border-bottom: none;
+  }
 
   .exp-ic {
-    width: 38px;
-    height: 38px;
-    border-radius: 11px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
-  .exp-ic svg { width: 19px; height: 19px; color: white; stroke-width: 2.2; }
-  .exp-info { flex: 1; }
+
+  .exp-ic svg {
+    width: 19px;
+    height: 19px;
+    color: white;
+    stroke-width: 2.2;
+    fill: none;
+  }
+
+  .exp-info {
+    flex: 1;
+  }
+
   .exp-name {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: -0.2px;
     color: var(--label);
     margin-bottom: 2px;
   }
+
   .exp-cat {
     font-size: 12px;
     color: var(--label-3);
-    letter-spacing: -0.1px;
   }
+
   .exp-sum {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
-    letter-spacing: -0.3px;
     color: var(--label);
   }
 
-  /* ============ TAB BAR ============ */
+  /* TAB BAR */
   .tabbar {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
+    left: 0;
+    right: 0;
     max-width: 430px;
-    background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border-top: 0.5px solid rgba(60,60,67,0.12);
-    padding: 10px 16px calc(24px + env(safe-area-inset-bottom));
+    margin: 0 auto;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding: 10px 18px 22px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     z-index: 100;
   }
+
   .tab {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    padding: 6px 8px;
-    color: var(--label-4);
+    gap: 4px;
     cursor: pointer;
-    transition: color 0.2s, transform 0.2s;
-    flex: 1;
+    padding: 4px 8px;
+    color: var(--label-3);
   }
-  .tab:active { transform: scale(0.92); }
-  .tab.active { color: var(--tint); }
-  .tab svg { width: 24px; height: 24px; stroke-width: 1.8; }
-  .tab.active svg { stroke-width: 2.2; }
+
+  .tab.active {
+    color: var(--tint);
+  }
+
+  .tab svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2;
+    fill: none;
+  }
+
   .tab-lbl {
-  font-size: 10px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.1px;
   }
@@ -521,38 +545,40 @@
     cursor: pointer;
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .fab:active { transform: scale(0.9); }
-  .fab svg { width: 24px; height: 24px; color: white; stroke-width: 2.4; }
 
+  .fab:active { transform: scale(0.9); }
+
+  .fab svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+    stroke-width: 2.4;
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
 
-  <!-- НАВ БАР -->
-  <div class="nav-bar">
+  <!-- НАВБАР -->
+  <div class="navbar">
     <div class="brand">
       <div class="brand-mark">
-        <!-- icon: sparkles -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 3l1.9 5.2L19 10l-5.1 1.8L12 17l-1.9-5.2L5 10l5.1-1.8L12 3z"/>
-          <path d="M19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14z"/>
         </svg>
       </div>
       <div class="brand-name">Сундук</div>
     </div>
     <div class="nav-actions">
       <div class="nav-btn">
-        <!-- search -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="7"/>
           <path d="M21 21l-4.3-4.3"/>
         </svg>
       </div>
       <div class="nav-btn">
-        <!-- bell -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/>
           <path d="M10.3 21a1.94 1.94 0 003.4 0"/>
         </svg>
@@ -562,8 +588,8 @@
 
   <!-- ПРИВЕТСТВИЕ -->
   <div class="greeting">
-    <div class="greeting-hello">Добрый день</div>
-    <div class="greeting-name">Анна 👋</div>
+    <div class="greeting-hello">Добрый день,</div>
+    <div class="greeting-name">Анна ✨</div>
   </div>
 
   <!-- БАЛАНС -->
@@ -571,26 +597,26 @@
     <div class="balance-top">
       <div class="balance-label">Баланс этого месяца</div>
       <div class="balance-eye">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
           <circle cx="12" cy="12" r="3"/>
         </svg>
       </div>
     </div>
-    <div class="balance-amount">42 580<span class="cur">₽</span></div>
+    <div class="balance-amount">42 580<span class="cur"> ₽</span></div>
     <div class="balance-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <path d="M7 17l5-5 5 5M7 7l5 5 5-5"/>
       </svg>
       Экономия 3 200 ₽
     </div>
   </div>
 
-  <!-- 4 КАРТОЧКИ -->
+  <!-- 4 КАРТОЧКИ 2x2 -->
   <div class="grid">
     <div class="card">
       <div class="card-ic g-lavender">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="5" width="20" height="14" rx="3"/>
           <path d="M2 10h20"/>
         </svg>
@@ -601,7 +627,7 @@
 
     <div class="card">
       <div class="card-ic g-pink">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 3v18h18"/>
           <path d="M7 14l4-4 4 4 5-5"/>
         </svg>
@@ -612,7 +638,7 @@
 
     <div class="card">
       <div class="card-ic g-mint">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="9"/>
           <circle cx="12" cy="12" r="5"/>
           <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
@@ -624,8 +650,7 @@
 
     <div class="card">
       <div class="card-ic g-blue">
-            <div class="card-ic g-blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
         </svg>
       </div>
@@ -663,7 +688,7 @@
   <!-- AI СОВЕТ -->
   <div class="ai">
     <div class="ai-ic">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/>
         <path d="M19 14l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z"/>
       </svg>
@@ -674,16 +699,17 @@
     </div>
   </div>
 
-  <!-- СЕКЦИЯ ТРАТЫ -->
+  <!-- ЗАГОЛОВОК -->
   <div class="section-head">
     <div class="section-ttl">Последние траты</div>
     <div class="section-lnk">Все</div>
   </div>
 
+  <!-- СПИСОК ТРАТ -->
   <div class="expenses">
     <div class="exp">
       <div class="exp-ic g-pink">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 8h18l-2 12H5L3 8z"/>
           <path d="M8 8V5a4 4 0 018 0v3"/>
         </svg>
@@ -697,106 +723,5 @@
 
     <div class="exp">
       <div class="exp-ic g-coral">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 8h1a4 4 0 010 8h-1"/>
-          <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
-          <line x1="6" y1="2" x2="6" y2="4"/>
-          <line x1="10" y1="2" x2="10" y2="4"/>
-          <line x1="14" y1="2" x2="14" y2="4"/>
-        </svg>
-      </div>
-      <div class="exp-info">
-        <div class="exp-name">Surf Coffee</div>
-        <div class="exp-cat">Кафе · вчера</div>
-      </div>
-      <div class="exp-sum">−380 ₽</div>
-    </div>
-
-    <div class="exp">
-      <div class="exp-ic g-mint">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"/>
-          <circle cx="20" cy="21" r="1"/>
-          <path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/>
-        </svg>
-      </div>
-      <div class="exp-info">
-        <div class="exp-name">Вкусвилл</div>
-        <div class="exp-cat">Продукты · вчера</div>
-      </div>
-      <div class="exp-sum">−1 280 ₽</div>
-    </div>
-
-    <div class="exp">
-      <div class="exp-ic g-blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="8" width="18" height="13" rx="2"/>
-          <path d="M16 3l-4 5-4-5"/>
-        </svg>
-      </div>
-      <div class="exp-info">
-        <div class="exp-name">Яндекс Такси</div>
-        <div class="exp-cat">Транспорт · 12 ноя</div>
-      </div>
-      <div class="exp-sum">−420 ₽</div>
-    </div>
-
-    <div class="exp">
-      <div class="exp-ic g-purple">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="3" width="20" height="14" rx="2"/>
-          <path d="M8 21h8M12 17v4"/>
-        </svg>
-      </div>
-      <div class="exp-info">
-        <div class="exp-name">Netflix</div>
-        <div class="exp-cat">Подписка · 10 ноя</div>
-      </div>
-      <div class="exp-sum">−799 ₽</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- TAB BAR -->
-<div class="tabbar">
-  <div class="tab active">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 12l9-9 9 9v9a2 2 0 01-2 2h-4v-7h-6v7H5a2 2 0 01-2-2v-9z"/>
-    </svg>
-    <div class="tab-lbl">Главная</div>
-  </div>
-
-  <div class="tab">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="5" width="18" height="14" rx="3"/>
-      <path d="M3 10h18"/>
-    </svg>
-    <div class="tab-lbl">Подписки</div>
-  </div>
-
-  <div class="fab">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 5v14M5 12h14"/>
-    </svg>
-  </div>
-
-  <div class="tab">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 3v18h18"/>
-      <path d="M7 14l4-4 4 4 5-5"/>
-    </svg>
-    <div class="tab-lbl">Аналитика</div>
-  </div>
-
-  <div class="tab">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="8" r="4"/>
-      <path d="M4 21a8 8 0 0116 0"/>
-    </svg>
-    <div class="tab-lbl">Профиль</div>
-  </div>
-</div>
-
-</body>
-</html>
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 
